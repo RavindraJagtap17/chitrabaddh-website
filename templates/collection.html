@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Chitrabaddh | Collection</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo">
+            चित्रबद्ध
+        </div>
+
+
+        <nav>
+
+            <a href="{{ url_for('home') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('collection') }}">
+                Collection
+            </a>
+
+            <a href="{{ url_for('story') }}">
+                Our Story
+            </a>
+
+            <a href="{{ url_for('process') }}">
+                Process
+            </a>
+
+            <a href="{{ url_for('contact') }}">
+                Contact
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- COLLECTION PAGE -->
+
+    <section class="collection">
+
+
+        <!-- COLLECTION HEADING -->
+
+        <div class="collection-heading">
+
+            <p class="small-title">
+                CURATED ARTWORKS
+            </p>
+
+
+            <h1>
+                Our Collection
+            </h1>
+
+
+            <p>
+                Discover handmade artworks created with
+                tradition, nature and love.
+            </p>
+
+        </div>
+
+
+
+        <!-- GALLERY -->
+
+        <div class="gallery">
+
+
+            <!-- ARTWORK 1 -->
+
+            <div class="card">
+
+                <img
+                    src="{{ url_for('static', filename='image/art2.jpeg') }}"
+                    alt="Botanical Frame"
+                >
+
+
+                <div class="card-content">
+
+                    <h3>
+                        Botanical Frame
+                    </h3>
+
+
+                    <p>
+                        Handmade floral artwork
+                    </p>
+
+
+                    <div class="product-bottom">
+
+                        <strong>
+                            ₹2,500
+                        </strong>
+
+
+                        <a
+                            href="https://wa.me/919834541457?text=Hello%20Chitrabaddh,%20I%20am%20interested%20in%20the%20Botanical%20Frame%20artwork%20priced%20at%20₹2,500."
+                            target="_blank"
+                        >
+                            Order on WhatsApp
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ARTWORK 2 -->
+
+            <div class="card">
+
+                <img
+                    src="{{ url_for('static', filename='image/art3.jpeg') }}"
+                    alt="Floral Stories"
+                >
+
+
+                <div class="card-content">
+
+                    <h3>
+                        Floral Stories
+                    </h3>
+
+
+                    <p>
+                        Elegant handmade wall art
+                    </p>
+
+
+                    <div class="product-bottom">
+
+                        <strong>
+                            ₹3,000
+                        </strong>
+
+
+                        <a
+                            href="https://wa.me/919834541457?text=Hello%20Chitrabaddh,%20I%20am%20interested%20in%20the%20Floral%20Stories%20artwork%20priced%20at%20₹3,000."
+                            target="_blank"
+                        >
+                            Order on WhatsApp
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ARTWORK 3 -->
+
+            <div class="card">
+
+                <img
+                    src="{{ url_for('static', filename='image/art4.jpeg') }}"
+                    alt="Pichwai Inspired"
+                >
+
+
+                <div class="card-content">
+
+                    <h3>
+                        Pichwai Inspired
+                    </h3>
+
+
+                    <p>
+                        Traditional Indian artwork
+                    </p>
+
+
+                    <div class="product-bottom">
+
+                        <strong>
+                            ₹4,500
+                        </strong>
+
+
+                        <a
+                            href="https://wa.me/919834541457?text=Hello%20Chitrabaddh,%20I%20am%20interested%20in%20the%20Pichwai%20Inspired%20artwork%20priced%20at%20₹4,500."
+                            target="_blank"
+                        >
+                            Order on WhatsApp
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ARTWORK 4 -->
+
+            <div class="card">
+
+                <img
+                    src="{{ url_for('static', filename='image/art1.jpeg.jpeg') }}"
+                    alt="Peacock Art"
+                >
+
+
+                <div class="card-content">
+
+                    <h3>
+                        Peacock Art
+                    </h3>
+
+
+                    <p>
+                        Handmade traditional artwork
+                    </p>
+
+
+                    <div class="product-bottom">
+
+                        <strong>
+                            ₹3,500
+                        </strong>
+
+
+                        <a
+                            href="https://wa.me/919834541457?text=Hello%20Chitrabaddh,%20I%20am%20interested%20in%20the%20Peacock%20Art%20artwork%20priced%20at%20₹3,500."
+                            target="_blank"
+                        >
+                            Order on WhatsApp
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- PAGE NAVIGATION -->
+
+    <div class="page-navigation">
+
+
+        <a href="{{ url_for('home') }}">
+            ← Back to Home
+        </a>
+
+
+        <a href="{{ url_for('story') }}">
+            Next: Our Story →
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>

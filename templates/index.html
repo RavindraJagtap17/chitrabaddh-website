@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chitrabaddh | Handmade Art</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="logo">
+            चित्रबद्ध
+        </div>
+
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+
+            <a href="{{ url_for('collection') }}">
+                Collection
+            </a>
+
+            <a href="{{ url_for('story') }}">
+                Our Story
+            </a>
+
+            <a href="{{ url_for('process') }}">
+                Process
+            </a>
+
+            <a href="{{ url_for('contact') }}">
+                Contact
+            </a>
+        </nav>
+
+    </header>
+
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+
+        <div class="hero-text">
+
+            <p class="small-title">
+                HANDMADE • INDIAN ART • SANGLI
+            </p>
+
+            <h1>
+                Art that brings
+                <span>stories</span>
+                to your walls.
+            </h1>
+
+            <p class="description">
+                Thoughtfully designed handmade artworks
+                inspired by nature, Indian traditions
+                and everyday beauty.
+            </p>
+
+            <!-- EXPLORE COLLECTION BUTTON -->
+            <a href="{{ url_for('collection') }}"
+               class="explore-btn">
+                Explore Collection
+            </a>
+
+        </div>
+
+
+        <div class="hero-image">
+
+            <img src="{{ url_for('static', filename='image/art1.jpeg.jpeg') }}"
+                 alt="Chitrabaddh Artwork">
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

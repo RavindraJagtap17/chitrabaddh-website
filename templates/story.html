@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Chitrabaddh | Our Story</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo">
+            चित्रबद्ध
+        </div>
+
+        <nav>
+
+            <a href="{{ url_for('home') }}">
+                Home
+            </a>
+
+            <a href="{{ url_for('collection') }}">
+                Collection
+            </a>
+
+            <a href="{{ url_for('story') }}">
+                Our Story
+            </a>
+
+            <a href="{{ url_for('process') }}">
+                Process
+            </a>
+
+            <a href="{{ url_for('contact') }}">
+                Contact
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- OUR STORY SECTION -->
+
+    <section class="story">
+
+        <div class="story-image">
+
+            <img
+                src="{{ url_for('static', filename='image/art1.jpeg.jpeg') }}"
+                alt="Chitrabaddh Story"
+            >
+
+        </div>
+
+
+        <div class="story-text">
+
+            <p class="small-title">
+                OUR STORY
+            </p>
+
+            <h1>
+                Where art meets
+                <span>emotion.</span>
+            </h1>
+
+            <p>
+                Chitrabaddh is a celebration of handmade art,
+                inspired by Indian traditions, nature and
+                everyday beauty.
+            </p>
+
+            <p>
+                Every artwork is thoughtfully created with
+                love, patience and attention to detail,
+                bringing stories and emotions to your walls.
+            </p>
+
+            <p>
+                Our aim is to create meaningful artworks that
+                add warmth, beauty and personality to every space.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- PAGE NAVIGATION -->
+
+    <div class="page-navigation">
+
+        <a href="{{ url_for('collection') }}">
+            ← Back to Collection
+        </a>
+
+        <a href="{{ url_for('process') }}">
+            Next: Our Process →
+        </a>
+
+    </div>
+
+
+</body>
+
+</html>

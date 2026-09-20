@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Chitrabaddh | Login</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo">
+            चित्रबद्ध
+        </div>
+
+        <nav>
+
+            <a href="#">Home</a>
+
+            <a href="#">Collection</a>
+
+            <a href="#">Our Story</a>
+
+            <a href="#">Process</a>
+
+            <a href="#">Contact</a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- AUTH SECTION -->
+
+    <section class="auth-section">
+
+        <div class="auth-box">
+
+
+            <!-- =========================
+                 LOGIN FORM
+            ========================== -->
+
+            <div id="login-form">
+
+                <p class="small-title">
+                    WELCOME BACK
+                </p>
+
+                <h1>
+                    Login to
+                    <span>Chitrabaddh</span>
+                </h1>
+
+                <p class="auth-description">
+                    Login to your account and continue exploring
+                    our handmade artworks.
+                </p>
+
+
+                <form
+                    id="loginForm"
+                    action="/login"
+                    method="POST"
+                    onsubmit="return validateLogin()"
+                    autocomplete="off"
+                >
+
+                    <!-- EMAIL -->
+
+                    <label for="login-email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="login-email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="off"
+                    >
+
+                    <small
+                        class="error-message"
+                        id="login-email-error">
+                    </small>
+
+
+                    <!-- PASSWORD -->
+
+                    <label for="login-password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="login-password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="new-password"
+                    >
+
+                    <small
+                        class="error-message"
+                        id="login-password-error">
+                    </small>
+
+
+                    <!-- LOGIN BUTTON -->
+
+                    <button type="submit">
+                        Login
+                    </button>
+
+                    <p
+                        class="success-message"
+                        id="login-success">
+                    </p>
+
+                </form>
+
+
+                <p class="auth-link">
+
+                    Don't have an account?
+
+                    <a
+                        href="#"
+                        onclick="showRegister(); return false;">
+                        Create Account
+                    </a>
+
+                </p>
+
+            </div>
+
+
+
+            <!-- =========================
+                 REGISTER FORM
+            ========================== -->
+
+            <div
+                id="register-form"
+                style="display: none;"
+            >
+
+                <p class="small-title">
+                    JOIN CHITRABADDH
+                </p>
+
+                <h1>
+                    Create your
+                    <span>account.</span>
+                </h1>
+
+                <p class="auth-description">
+                    Register once and login anytime to order
+                    your favourite artworks.
+                </p>
+
+
+                <form
+                    id="registerForm"
+                    action="/register"
+                    method="POST"
+                    onsubmit="return validateRegister()"
+                    autocomplete="off"
+                >
+
+
+                    <!-- NAME -->
+
+                    <label for="register-name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="register-name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        autocomplete="off"
+                    >
+
+                    <small
+                        class="error-message"
+                        id="name-error">
+                    </small>
+
+
+
+                    <!-- EMAIL -->
+
+                    <label for="register-email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="register-email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="off"
+                    >
+
+                    <small
+                        class="error-message"
+                        id="register-email-error">
+                    </small>
+
+
+
+                    <!-- PHONE -->
+
+                    <label for="register-phone">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="register-phone"
+                        name="phone"
+                        placeholder="Enter 10-digit phone number"
+                        maxlength="10"
+                        inputmode="numeric"
+                        autocomplete="off"
+                    >
+
+                    <small
+                        class="error-message"
+                        id="phone-error">
+                    </small>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <label for="register-password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="register-password"
+                        name="password"
+                        placeholder="Minimum 8 characters"
+                        autocomplete="new-password"
+                    >
+
+                    <small
+                        class="error-message"
+                        id="password-error">
+                    </small>
+
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <label for="register-confirm">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="register-confirm"
+                        placeholder="Re-enter your password"
+                        autocomplete="new-password"
+                    >
+
+                    <small
+                        class="error-message"
+                        id="confirm-error">
+                    </small>
+
+
+
+                    <!-- CREATE ACCOUNT -->
+
+                    <button type="submit">
+                        Create Account
+                    </button>
+
+                    <p
+                        class="success-message"
+                        id="register-success">
+                    </p>
+
+                </form>
+
+
+                <p class="auth-link">
+
+                    Already have an account?
+
+                    <a
+                        href="#"
+                        onclick="showLogin(); return false;">
+                        Login
+                    </a>
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="logo">
+            चित्रबद्ध
+        </div>
+
+        <p>
+            Handmade art created with emotion.
+        </p>
+
+        <p>
+            © 2026 Chitrabaddh. All rights reserved.
+        </p>
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        /* LOGIN → REGISTER */
+
+        function showRegister() {
+
+            document.getElementById("login-form").style.display = "none";
+
+            document.getElementById("register-form").style.display = "block";
+
+            document.title = "Chitrabaddh | Register";
+
+        }
+
+
+
+        /* REGISTER → LOGIN */
+
+        function showLogin() {
+
+            document.getElementById("register-form").style.display = "none";
+
+            document.getElementById("login-form").style.display = "block";
+
+            document.title = "Chitrabaddh | Login";
+
+        }
+
+
+
+        /* =========================
+           REGISTER VALIDATION
+        ========================== */
+
+        function validateRegister() {
+
+            const name =
+                document.getElementById("register-name").value.trim();
+
+            const email =
+                document.getElementById("register-email").value.trim();
+
+            const phone =
+                document.getElementById("register-phone").value.trim();
+
+            const password =
+                document.getElementById("register-password").value;
+
+            const confirmPassword =
+                document.getElementById("register-confirm").value;
+
+
+            document.getElementById("name-error").textContent = "";
+
+            document.getElementById("register-email-error").textContent = "";
+
+            document.getElementById("phone-error").textContent = "";
+
+            document.getElementById("password-error").textContent = "";
+
+            document.getElementById("confirm-error").textContent = "";
+
+            document.getElementById("register-success").textContent = "";
+
+
+            let valid = true;
+
+
+            /* NAME */
+
+            const namePattern = /^[A-Za-z ]{3,}$/;
+
+            if (name === "") {
+
+                document.getElementById("name-error").textContent =
+                    "Name is required.";
+
+                valid = false;
+
+            } else if (!namePattern.test(name)) {
+
+                document.getElementById("name-error").textContent =
+                    "Name must contain only letters and spaces.";
+
+                valid = false;
+
+            }
+
+
+            /* EMAIL */
+
+            const emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (email === "") {
+
+                document.getElementById("register-email-error").textContent =
+                    "Email is required.";
+
+                valid = false;
+
+            } else if (!emailPattern.test(email)) {
+
+                document.getElementById("register-email-error").textContent =
+                    "Please enter a valid email address.";
+
+                valid = false;
+
+            }
+
+
+            /* PHONE */
+
+            const phonePattern =
+                /^[6-9][0-9]{9}$/;
+
+            if (phone === "") {
+
+                document.getElementById("phone-error").textContent =
+                    "Phone number is required.";
+
+                valid = false;
+
+            } else if (!phonePattern.test(phone)) {
+
+                document.getElementById("phone-error").textContent =
+                    "Enter a valid 10-digit Indian mobile number.";
+
+                valid = false;
+
+            }
+
+
+            /* PASSWORD */
+
+            const passwordPattern =
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+            if (password === "") {
+
+                document.getElementById("password-error").textContent =
+                    "Password is required.";
+
+                valid = false;
+
+            } else if (!passwordPattern.test(password)) {
+
+                document.getElementById("password-error").textContent =
+                    "Password must be 8+ characters with uppercase, lowercase and number.";
+
+                valid = false;
+
+            }
+
+
+            /* CONFIRM PASSWORD */
+
+            if (confirmPassword === "") {
+
+                document.getElementById("confirm-error").textContent =
+                    "Please confirm your password.";
+
+                valid = false;
+
+            } else if (password !== confirmPassword) {
+
+                document.getElementById("confirm-error").textContent =
+                    "Passwords do not match.";
+
+                valid = false;
+
+            }
+
+
+            return valid;
+
+        }
+
+
+
+        /* =========================
+           LOGIN VALIDATION
+        ========================== */
+
+        function validateLogin() {
+
+            const email =
+                document.getElementById("login-email").value.trim();
+
+            const password =
+                document.getElementById("login-password").value;
+
+
+            document.getElementById("login-email-error").textContent = "";
+
+            document.getElementById("login-password-error").textContent = "";
+
+            document.getElementById("login-success").textContent = "";
+
+
+            let valid = true;
+
+
+            /* EMAIL */
+
+            const emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (email === "") {
+
+                document.getElementById("login-email-error").textContent =
+                    "Email is required.";
+
+                valid = false;
+
+            } else if (!emailPattern.test(email)) {
+
+                document.getElementById("login-email-error").textContent =
+                    "Enter a valid email address.";
+
+                valid = false;
+
+            }
+
+
+            /* PASSWORD */
+
+            if (password === "") {
+
+                document.getElementById("login-password-error").textContent =
+                    "Password is required.";
+
+                valid = false;
+
+            }
+
+
+            return valid;
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
