@@ -1016,6 +1016,19 @@ footer p {
     margin-top: 15px;
 }
 
+.server-error {
+    color: #c0392b;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.server-error:empty,
+.success-message:empty {
+    display: none;
+}
+
 .auth-section + footer {
     background-color: #1f2a20;
     color: #f5f0e7;
