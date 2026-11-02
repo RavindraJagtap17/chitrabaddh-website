@@ -1,306 +1,196 @@
+
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <title>Chitrabaddh | Contact</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+        }
+
+        .header-auth {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-auth a {
+            text-decoration: none;
+            color: #1f2a20;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid #a4873b;
+            padding: 7px 18px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .header-auth a:hover {
+            background: #a4873b;
+            color: white;
+        }
+
+        .welcome-user {
+            color: #1f2a20;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .header-right {
+                align-items: center;
+                width: 100%;
+            }
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
+<header>
+    <div class="logo">चित्रबद्ध</div>
 
-    <!-- HEADER -->
-
-    <header>
-
-        <div class="logo">
-            चित्रबद्ध
+    <div class="header-right">
+        <div class="header-auth">
+            {% if session.get('user_id') %}
+                <span class="welcome-user">Hi, {{ session.get('name') }}</span>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('auth') }}">Login</a>
+            {% endif %}
         </div>
 
         <nav>
-
-            <a href="{{ url_for('home') }}">
-                Home
-            </a>
-
-            <a href="{{ url_for('collection') }}">
-                Collection
-            </a>
-
-            <a href="{{ url_for('story') }}">
-                Our Story
-            </a>
-
-            <a href="{{ url_for('process') }}">
-                Process
-            </a>
-
-            <a href="{{ url_for('contact') }}">
-                Contact
-            </a>
-
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('collection') }}">Collection</a>
+            <a href="{{ url_for('story') }}">Our Story</a>
+            <a href="{{ url_for('process') }}">Process</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
         </nav>
+    </div>
+</header>
 
-    </header>
+<section class="contact-intro">
+    <p class="small-title">GET IN TOUCH</p>
 
+    <h1>Let's talk about <span>art.</span></h1>
 
-    <!-- CONTACT INTRO -->
+    <p>
+        Have a question about an artwork, want to place an
+        order, or looking for a custom piece? We would love
+        to hear from you.
+    </p>
+</section>
 
-    <section class="contact-intro">
+<section class="contact-section">
 
-        <p class="small-title">
-            GET IN TOUCH
-        </p>
-
-        <h1>
-            Let's talk about
-            <span>art.</span>
-        </h1>
+    <div class="contact-info">
+        <h2>We'd love to hear from you.</h2>
 
         <p>
-            Have a question about an artwork, want to place an
-            order, or looking for a custom piece? We would love
-            to hear from you.
+            Whether you have a question about our artworks,
+            want to place an order, or need a custom artwork,
+            feel free to get in touch with us.
         </p>
 
-    </section>
-
-
-    <!-- CONTACT SECTION -->
-
-    <section class="contact-section">
-
-
-        <!-- CONTACT INFORMATION -->
-
-        <div class="contact-info">
-
-            <h2>
-                We'd love to hear from you.
-            </h2>
-
-            <p>
-                Whether you have a question about our artworks,
-                want to place an order, or need a custom artwork,
-                feel free to get in touch with us.
-            </p>
-
-
-            <!-- WHATSAPP -->
-
-            <div class="contact-item">
-
-                <h3>
-                    WhatsApp
-                </h3>
-
-                <p>
-                    Chat with us directly
-                </p>
-
-                <a
-                    href="https://wa.me/91XXXXXXXXXX"
-                    target="_blank"
-                >
-                    Chat on WhatsApp →
-                </a>
-
-            </div>
-
-
-            <!-- EMAIL -->
-
-            <div class="contact-item">
-
-                <h3>
-                    Email
-                </h3>
-
-                <p>
-                    Write to us anytime
-                </p>
-
-                <a href="mailto:hello@chitrabaddh.com">
-                    hello@chitrabaddh.com
-                </a>
-
-            </div>
-
-
-            <!-- INSTAGRAM -->
-
-            <div class="contact-item">
-
-                <h3>
-                    Instagram
-                </h3>
-
-                <p>
-                    Follow our art journey
-                </p>
-
-                <a
-                    href="https://instagram.com/"
-                    target="_blank"
-                >
-                    Follow us on Instagram →
-                </a>
-
-            </div>
-
-
-            <!-- LOCATION -->
-
-            <div class="contact-item">
-
-                <h3>
-                    Location
-                </h3>
-
-                <p>
-                    Maharashtra, India
-                </p>
-
-            </div>
-
+        <div class="contact-item">
+            <h3>WhatsApp</h3>
+            <p>Chat with us directly</p>
+            <a href="https://wa.me/91XXXXXXXXXX" target="_blank">
+                Chat on WhatsApp →
+            </a>
         </div>
 
-
-        <!-- CONTACT FORM -->
-
-        <div class="contact-form">
-
-            <h2>
-                Send us a message
-            </h2>
-
-            <form>
-
-                <!-- NAME -->
-
-                <label for="name">
-                    Your Name
-                </label>
-
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="Enter your name"
-                    required
-                >
-
-
-                <!-- EMAIL -->
-
-                <label for="email">
-                    Email Address
-                </label>
-
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    required
-                >
-
-
-                <!-- PHONE -->
-
-                <label for="phone">
-                    Phone Number
-                </label>
-
-                <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    placeholder="Enter your phone number"
-                >
-
-
-                <!-- SUBJECT -->
-
-                <label for="subject">
-                    Subject
-                </label>
-
-                <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    placeholder="What would you like to ask?"
-                >
-
-
-                <!-- MESSAGE -->
-
-                <label for="message">
-                    Message
-                </label>
-
-                <textarea
-                    id="message"
-                    name="message"
-                    rows="6"
-                    placeholder="Write your message here..."
-                    required
-                ></textarea>
-
-
-                <!-- SUBMIT -->
-
-                <button type="submit">
-                    Send Message
-                </button>
-
-            </form>
-
+        <div class="contact-item">
+            <h3>Email</h3>
+            <p>Write to us anytime</p>
+            <a href="mailto:hello@chitrabaddh.com">
+                hello@chitrabaddh.com
+            </a>
         </div>
 
-    </section>
+        <div class="contact-item">
+            <h3>Instagram</h3>
+            <p>Follow our art journey</p>
+            <a href="https://instagram.com/" target="_blank">
+                Follow us on Instagram →
+            </a>
+        </div>
 
-
-    <!-- PAGE NAVIGATION -->
-
-    <div class="page-navigation">
-
-        <a href="{{ url_for('process') }}">
-            ← Back to Our Process
-        </a>
-
-        <a href="{{ url_for('home') }}">
-            Back to Home →
-        </a>
-
+        <div class="contact-item">
+            <h3>Location</h3>
+            <p>Sangli Maharashtra, India</p>
+        </div>
     </div>
 
+    <div class="contact-form">
+        <h2>Send us a message</h2>
 
-    <!-- FOOTER -->
+        <form action="{{ url_for('contact') }}" method="POST">
 
-    <footer>
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name"
+                   placeholder="Enter your name" required>
 
-        <div class="logo">
-            चित्रबद्ध
-        </div>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email"
+                   placeholder="Enter your email" required>
 
-        <p>
-            Handmade art created with emotion.
-        </p>
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone"
+                   placeholder="Enter your phone number">
 
-        <p>
-            © 2026 Chitrabaddh. All rights reserved.
-        </p>
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject"
+                   placeholder="What would you like to ask?">
 
-    </footer>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6"
+                      placeholder="Write your message here..."
+                      required></textarea>
 
+            <button type="submit">Send Message</button>
+
+        </form>
+    </div>
+
+</section>
+
+<div class="page-navigation">
+    <a href="{{ url_for('process') }}">← Back to Our Process</a>
+    <a href="{{ url_for('home') }}">Back to Home →</a>
+</div>
+
+<footer>
+    <div class="logo">चित्रबद्ध</div>
+    <p>Handmade art created with emotion.</p>
+    <p>© 2026 Chitrabaddh. All rights reserved.</p>
+</footer>
 
 </body>
-
 </html>

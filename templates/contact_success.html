@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Sent | Chitrabaddh</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f0e7;
+            font-family: Arial, sans-serif;
+            color: #1f2a20;
+            padding: 20px;
+        }
+
+        .success-box {
+            max-width: 480px;
+            width: 100%;
+            padding: 40px 30px;
+            text-align: center;
+            background: #fffdf8;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        .success-icon {
+            font-size: 55px;
+            color: #4b8b52;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            margin-bottom: 15px;
+            color: #1f2a20;
+        }
+
+        p {
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #555;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        a {
+            display: inline-block;
+            width: 100%;
+            max-width: 280px;
+            padding: 12px 20px;
+            background: #a4873b;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            background: #80682e;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+        }
+
+        .whatsapp-btn:hover {
+            background: #1da851;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="success-box">
+
+        <div class="success-icon">✓</div>
+
+        <h1>Message Sent!</h1>
+
+        <p>
+            Thank you for contacting Chitrabaddh.
+            Your enquiry has been submitted successfully.
+            We will get back to you soon.
+        </p>
+
+        <div class="buttons">
+
+            {% if whatsapp_url %}
+            <a href="{{ whatsapp_url }}"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="whatsapp-btn">
+                Send Enquiry on WhatsApp
+            </a>
+            {% endif %}
+
+            <a href="{{ url_for('contact') }}">
+                Back to Contact
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

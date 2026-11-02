@@ -1,3 +1,8 @@
+
+/* =========================
+   GLOBAL
+========================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -10,16 +15,22 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* HEADER */
+
+/* =========================
+   HEADER
+========================= */
 
 header {
-    height: 80px;
-    padding: 0 70px;
-
+    min-height: 90px;
+    height: auto;
+    width: 100%;
+    padding: 15px 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    flex-wrap: wrap;
+    gap: 15px;
+    position: relative;
     border-bottom: 1px solid #ddd5c5;
 }
 
@@ -28,45 +39,129 @@ header {
     font-weight: bold;
 }
 
-nav {
+/* Right Side Header */
+
+.header-right {
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+/* Login / Logout */
+
+.header-auth {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.header-auth a {
+    display: inline-block;
+    padding: 8px 20px;
+    border: 1px solid #a4873b;
+    border-radius: 5px;
+    color: #a4873b;
+    background: transparent;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.header-auth a:hover {
+    background: #a4873b;
+    color: white;
+}
+
+.welcome-user {
+    color: #1f2a20;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Navigation */
+
+header nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     gap: 30px;
 }
 
-nav a {
+header nav a {
     text-decoration: none;
     color: #1f2a20;
     font-size: 15px;
+    transition: 0.3s;
 }
 
-nav a:hover {
+header nav a:hover {
     color: #a4873b;
 }
 
 
-/* HERO */
+/* =========================
+   COMMON BUTTON
+========================= */
+
+button {
+    background-color: #1f2a20;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #a4873b;
+}
+
+.explore-btn {
+    display: inline-block;
+    background-color: #1f2a20;
+    color: white;
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+.explore-btn:hover {
+    background-color: #a4873b;
+}
+
+
+/* =========================
+   COMMON SMALL TITLE
+========================= */
+
+.small-title {
+    font-size: 14px;
+    letter-spacing: 3px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+
+/* =========================
+   HOME / HERO
+========================= */
 
 .hero {
     min-height: 650px;
-
     display: grid;
     grid-template-columns: 1fr 1fr;
-
     align-items: center;
-
     gap: 60px;
-
     padding: 70px 100px;
 }
 
 .hero-text {
     max-width: 650px;
-}
-
-.small-title {
-    font-size: 13px;
-    letter-spacing: 3px;
-    margin-bottom: 25px;
 }
 
 .hero h1 {
@@ -87,29 +182,6 @@ nav a:hover {
     margin-bottom: 30px;
 }
 
-
-/* BUTTON */
-
-button {
-    background-color: #1f2a20;
-    color: white;
-
-    border: none;
-
-    padding: 15px 25px;
-
-    font-size: 13px;
-
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #a4873b;
-}
-
-
-/* HERO IMAGE */
-
 .hero-image {
     width: 100%;
 }
@@ -117,15 +189,15 @@ button:hover {
 .hero-image img {
     width: 100%;
     height: 520px;
-
     object-fit: cover;
-
     display: block;
-
-    box-shadow: 20px 20px 0px #d5bf82;
+    box-shadow: 20px 20px 0 #d5bf82;
 }
 
-/* COLLECTION */
+
+/* =========================
+   COLLECTION
+========================= */
 
 .collection {
     padding: 100px 8%;
@@ -148,7 +220,9 @@ button:hover {
 }
 
 
-/* GALLERY */
+/* =========================
+   GALLERY
+========================= */
 
 .gallery {
     display: grid;
@@ -156,10 +230,8 @@ button:hover {
     gap: 30px;
 }
 
-
-/* CARD */
-
 .card {
+    position: relative;
     background-color: #f5f0e7;
     overflow: hidden;
     transition: 0.3s;
@@ -169,18 +241,12 @@ button:hover {
     transform: translateY(-8px);
 }
 
-
-/* CARD IMAGE */
-
 .card img {
     width: 100%;
     height: 380px;
     object-fit: cover;
     display: block;
 }
-
-
-/* CARD CONTENT */
 
 .card-content {
     padding: 25px;
@@ -197,12 +263,15 @@ button:hover {
 }
 
 
-/* PRICE + WHATSAPP */
+/* =========================
+   PRICE + WHATSAPP
+========================= */
 
 .product-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }
 
 .product-bottom strong {
@@ -210,212 +279,342 @@ button:hover {
 }
 
 .product-bottom a {
+    display: inline-block;
     background-color: #1f2a20;
     color: white;
-
-    padding: 10px 15px;
-
+    padding: 10px 16px;
     text-decoration: none;
-
-    font-size: 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .product-bottom a:hover {
     background-color: #a4873b;
 }
 
-.explore-btn {
-    display: inline-block;
-    background-color: #1f2a20;
-    color: white;
-    padding: 15px 25px;
-    text-decoration: none;
-    font-size: 13px;
-    transition: 0.3s;
-}
 
-/* OUR STORY PAGE */
+/* =========================
+   WISHLIST TOP BUTTON
+========================= */
 
-.story {
-    min-height: 80vh;
-    padding: 100px 10%;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 70px;
-
-    align-items: center;
-
-    background-color: #f5f0e7;
-}
-
-
-/* STORY IMAGE */
-
-.story-image img {
-    width: 100%;
-    height: 550px;
-
-    object-fit: cover;
-}
-
-
-/* STORY TEXT */
-
-.story-text h1 {
-    font-size: 55px;
-    margin: 20px 0;
-}
-
-.story-text h1 span {
-    font-style: italic;
-}
-
-.story-text p {
-    font-size: 17px;
-
-    line-height: 1.8;
-
-    margin-bottom: 18px;
-
-    color: #555;
-}
-
-
-/* PAGE NAVIGATION */
-
-.page-navigation {
-
-    padding: 40px 10%;
-
+.wishlist-top {
     display: flex;
-
-    justify-content: space-between;
-
-    background-color: #fffdf8;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin: 25px 0;
+    padding: 0 10px;
 }
 
+.wishlist-main-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background: #8b4a2f;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    min-width: 145px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: 0.3s ease;
+}
 
-.page-navigation a {
+.wishlist-main-btn:hover {
+    background: #66351f;
+    transform: translateY(-2px);
+}
 
-    text-decoration: none;
-
+#wishlistCount {
     color: white;
-
-    background-color: #1f2a20;
-
-    padding: 15px 25px;
-
-    transition: 0.3s;
-}
-
-
-.page-navigation a:hover {
-
-    background-color: #a4873b;
+    font-weight: bold;
 }
 
 
 /* =========================
-   OUR STORY PAGE
+   WISHLIST HEART BUTTON
+========================= */
+
+.wishlist-heart {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    background: #fffdf8;
+    color: #8b4a2f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.wishlist-heart:hover {
+    background: #8b4a2f;
+    color: white;
+}
+
+.wishlist-heart.active {
+    background: #8b4a2f;
+    color: white;
+}
+
+.wishlist-heart svg {
+    width: 22px;
+    height: 22px;
+}
+
+
+/* =========================
+   WISHLIST SECTION
+========================= */
+
+#wishlistSection {
+    padding: 80px 8%;
+    background-color: #fffdf8;
+}
+
+#wishlistSection h2 {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+#wishlistGallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.wishlist-empty {
+    text-align: center;
+    color: #777;
+    font-size: 17px;
+    padding: 40px 10px;
+}
+
+
+/* =========================
+   SEARCH BAR
+========================= */
+
+.search-wrapper {
+    max-width: 680px;
+    margin: 25px auto 55px;
+    padding: 0 15px;
+    text-align: center;
+}
+
+.search-heading {
+    margin-bottom: 22px;
+}
+
+.search-heading span {
+    color: #a77b42;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.search-heading h2 {
+    color: #263326;
+    font-size: 30px;
+    font-weight: 500;
+    margin: 9px 0;
+}
+
+.search-heading p {
+    color: #888078;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Search Input */
+
+.collection-search {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 680px;
+    height: 58px;
+    margin: 20px auto 45px;
+    padding: 0 8px 0 20px;
+    background: #fffdf9;
+    border: 1px solid #dfc79f;
+    border-radius: 40px;
+    box-shadow: 0 5px 18px rgba(75, 53, 30, 0.07);
+    transition: all 0.3s ease;
+}
+
+.collection-search:hover {
+    border-color: #a77b42;
+    box-shadow: 0 7px 22px rgba(75, 53, 30, 0.11);
+}
+
+.collection-search:focus-within {
+    border-color: #8b4a2f;
+    box-shadow: 0 0 0 4px rgba(139, 74, 47, 0.10);
+}
+
+.search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 13px;
+}
+
+.search-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: #9b7447;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+}
+
+.collection-search input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 14px 5px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #302c27;
+    font-size: 14px;
+}
+
+.collection-search input::placeholder {
+    color: #aaa098;
+}
+
+.collection-search span {
+    font-size: 20px;
+}
+
+.clear-search {
+    display: none;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: #f3eadc;
+    color: #8b4a2f;
+    font-size: 24px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: 0.3s ease;
+}
+
+.clear-search:hover {
+    background: #8b4a2f;
+    color: white;
+}
+
+
+/* =========================
+   OUR STORY
 ========================= */
 
 .story {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 60px;
-    padding: 80px 8%;
-    min-height: 70vh;
+    gap: 70px;
+    padding: 90px 9%;
+    min-height: auto;
+    background: #f5f0e7;
 }
 
 .story-image {
     width: 45%;
+    position: relative;
 }
 
 .story-image img {
     width: 100%;
     max-width: 500px;
-    height: 550px;
+    height: 580px;
     object-fit: cover;
-    border-radius: 10px;
+    display: block;
+    border-radius: 6px;
+    border: 5px solid #fffdf8;
+    box-shadow: 18px 18px 0 #d5bf82,
+                0 12px 30px rgba(31, 42, 32, 0.12);
+    transition: 0.4s ease;
+}
+
+.story-image img:hover {
+    transform: translateY(-5px);
 }
 
 .story-text {
-    width: 45%;
+    width: 50%;
+    max-width: 600px;
 }
 
-.small-title {
-    font-size: 14px;
-    letter-spacing: 3px;
+.story-text .small-title {
+    color: #a4873b;
+    font-size: 12px;
+    letter-spacing: 4px;
     font-weight: bold;
+    margin-bottom: 15px;
 }
 
 .story-text h1 {
+    color: #1f2a20;
     font-size: 48px;
+    font-weight: 500;
     line-height: 1.2;
     margin: 15px 0 25px;
 }
 
 .story-text h1 span {
+    color: #a4873b;
     font-style: italic;
 }
 
-.story-text p {
-    font-size: 17px;
+.story-content {
+    padding: 18px 0;
+    border-bottom: 1px solid #d8cbb5;
+}
+
+.story-content h3 {
+    color: #263326;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.story-content h3 span {
+    color: #a4873b;
+}
+
+.story-content p {
+    color: #666056;
+    font-size: 15px;
     line-height: 1.8;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
-/* PAGE NAVIGATION */
-
-.page-navigation {
-    display: flex;
-    justify-content: space-between;
-    padding: 30px 8%;
-    margin-top: 20px;
+.story-signature {
+    margin-top: 25px;
+    color: #a4873b;
+    font-size: 22px;
+    font-style: italic;
 }
 
-.page-navigation a {
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.page-navigation a:hover {
-    text-decoration: underline;
-}
-
-
-/* MOBILE DESIGN */
-
-@media (max-width: 768px) {
-
-    .story {
-        flex-direction: column;
-        padding: 50px 5%;
-        gap: 35px;
-    }
-
-    .story-image,
-    .story-text {
-        width: 100%;
-    }
-
-    .story-image img {
-        height: 400px;
-    }
-
-    .story-text h1 {
-        font-size: 36px;
-    }
-
-    .page-navigation {
-        padding: 25px 5%;
-    }
-}
 
 /* =========================
-   OUR PROCESS PAGE
+   OUR PROCESS
 ========================= */
 
 .process-intro {
@@ -433,6 +632,7 @@ button:hover {
 
 .process-intro h1 span {
     font-style: italic;
+    color: #a4873b;
 }
 
 .process-intro > p:last-child {
@@ -440,17 +640,11 @@ button:hover {
     line-height: 1.8;
 }
 
-
-/* PROCESS CONTAINER */
-
 .process-container {
     width: 85%;
     max-width: 1100px;
     margin: auto;
 }
-
-
-/* PROCESS STEP */
 
 .process-step {
     display: flex;
@@ -463,9 +657,6 @@ button:hover {
     flex-direction: row-reverse;
 }
 
-
-/* IMAGE */
-
 .process-image {
     width: 50%;
 }
@@ -477,9 +668,6 @@ button:hover {
     border-radius: 10px;
 }
 
-
-/* TEXT */
-
 .process-text {
     width: 50%;
 }
@@ -488,6 +676,7 @@ button:hover {
     font-size: 14px;
     letter-spacing: 3px;
     font-weight: bold;
+    color: #a4873b;
 }
 
 .process-text h2 {
@@ -501,9 +690,505 @@ button:hover {
 }
 
 
-/* MOBILE */
+/* =========================
+   CONTACT
+========================= */
+
+.contact-intro {
+    text-align: center;
+    max-width: 750px;
+    margin: 80px auto 60px;
+    padding: 0 20px;
+}
+
+.contact-intro .small-title {
+    letter-spacing: 4px;
+}
+
+.contact-intro h1 {
+    font-size: 48px;
+    line-height: 1.2;
+    margin: 15px 0 25px;
+}
+
+.contact-intro h1 span {
+    font-style: italic;
+    color: #a4873b;
+}
+
+.contact-intro > p:last-child {
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.contact-section {
+    width: 85%;
+    max-width: 1100px;
+    margin: 0 auto 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+}
+
+.contact-info h2,
+.contact-form h2 {
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+.contact-info > p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 35px;
+}
+
+.contact-item {
+    margin-bottom: 30px;
+}
+
+.contact-item h3 {
+    font-size: 19px;
+    margin-bottom: 5px;
+}
+
+.contact-item p {
+    margin-bottom: 8px;
+}
+
+.contact-item a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #a4873b;
+}
+
+.contact-item a:hover {
+    color: #1f2a20;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form label {
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #a4873b;
+}
+
+.contact-form button {
+    width: fit-content;
+    padding: 14px 28px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+.page-navigation {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 8%;
+    margin-top: 20px;
+    background-color: #fffdf8;
+    gap: 15px;
+}
+
+.page-navigation a {
+    text-decoration: none;
+    color: white;
+    background-color: #1f2a20;
+    padding: 15px 25px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.page-navigation a:hover {
+    background-color: #a4873b;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    text-align: center;
+    padding: 50px 20px;
+    margin-top: 50px;
+}
+
+footer .logo {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+footer p {
+    margin: 8px 0;
+}
+
+
+/* =========================
+   LOGIN + REGISTER
+========================= */
+
+.auth-section {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 70px 20px;
+    background:
+        radial-gradient(circle at top left, #ead8a8 0%, transparent 30%),
+        radial-gradient(circle at bottom right, #d8c4a8 0%, transparent 30%),
+        #f5f0e7;
+}
+
+.auth-box {
+    width: 100%;
+    max-width: 520px;
+    padding: 45px 48px;
+    background: rgba(255, 253, 248, 0.97);
+    border: 1px solid #e0d2b8;
+    border-radius: 18px;
+    box-shadow: 0 20px 45px rgba(31, 42, 32, 0.12);
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(
+        90deg,
+        #1f2a20,
+        #a4873b,
+        #d5bf82,
+        #a4873b,
+        #1f2a20
+    );
+}
+
+.auth-box .small-title {
+    font-size: 13px;
+    letter-spacing: 4px;
+    font-weight: bold;
+    color: #a4873b;
+    margin-bottom: 12px;
+}
+
+.auth-box h1 {
+    font-size: 42px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: #1f2a20;
+}
+
+.auth-box h1 span {
+    color: #a4873b;
+    font-style: italic;
+}
+
+.auth-description {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #6b6b63;
+    margin-bottom: 30px;
+}
+
+.auth-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-box label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #1f2a20;
+    margin-bottom: 8px;
+}
+
+.auth-box input {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 5px;
+    border: 1px solid #d7cbb8;
+    border-radius: 9px;
+    background-color: #fffefa;
+    color: #1f2a20;
+    font-family: inherit;
+    font-size: 15px;
+    transition: 0.3s;
+    outline: none;
+}
+
+.auth-box input:hover {
+    border-color: #bca76e;
+}
+
+.auth-box input:focus {
+    border-color: #a4873b;
+    box-shadow: 0 0 0 3px rgba(164, 135, 59, 0.12);
+}
+
+.auth-box button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #1f2a20, #314332);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 8px 18px rgba(31, 42, 32, 0.18);
+}
+
+.auth-box button:hover {
+    background: linear-gradient(135deg, #a4873b, #c8a95d);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(164, 135, 59, 0.25);
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: 24px;
+    color: #6b6b63;
+    font-size: 14px;
+}
+
+.auth-link a {
+    color: #a4873b;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    color: #1f2a20;
+    text-decoration: underline;
+}
+
+.error-message {
+    display: block;
+    min-height: 18px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    color: #c0392b;
+    font-size: 12px;
+}
+
+.success-message {
+    color: #2f7d46;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.auth-section + footer {
+    background-color: #1f2a20;
+    color: #f5f0e7;
+}
+
+.auth-section + footer .logo {
+    color: #d5bf82;
+}
+
+
+/* =========================
+   IMAGE ZOOM MODAL
+========================= */
+
+.art-card img {
+    cursor: zoom-in;
+    transition: transform 0.3s ease;
+}
+
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding: 30px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+}
+
+.image-modal img {
+    max-width: 90%;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+
+/* =========================
+   OLD LOGIN BUTTON SUPPORT
+========================= */
+
+nav a.login-btn {
+    display: inline-block;
+    padding: 9px 20px;
+    border: 1px solid #a4873b;
+    border-radius: 5px;
+    color: #a4873b;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+nav a.login-btn:hover {
+    background: #a4873b;
+    color: white;
+}
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
 
 @media (max-width: 768px) {
+
+    /* Header */
+
+    header {
+        padding: 18px 5%;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .header-right {
+        width: 100%;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .header-auth {
+        justify-content: center;
+    }
+
+    header nav {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    header nav a {
+        font-size: 13px;
+    }
+
+    /* Home */
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 50px 5%;
+        gap: 35px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    .hero-image img {
+        height: 400px;
+    }
+
+    /* Collection */
+
+    .collection {
+        padding: 60px 5%;
+    }
+
+    .collection-heading h2 {
+        font-size: 36px;
+    }
+
+    .gallery,
+    #wishlistGallery {
+        grid-template-columns: 1fr;
+    }
+
+    .card img {
+        height: 350px;
+    }
+
+    /* Story */
+
+    .story {
+        flex-direction: column;
+        padding: 45px 6%;
+        gap: 40px;
+    }
+
+    .story-image,
+    .story-text {
+        width: 100%;
+    }
+
+    .story-image img {
+        height: 400px;
+        max-width: 100%;
+    }
+
+    .story-text h1 {
+        font-size: 36px;
+    }
+
+    .story-content h3 {
+        font-size: 17px;
+    }
+
+    .story-signature {
+        font-size: 20px;
+    }
+
+    /* Process */
 
     .process-intro {
         margin-top: 50px;
@@ -533,223 +1218,7 @@ button:hover {
         font-size: 28px;
     }
 
-}
-
-/* WHATSAPP ORDER BUTTON */
-
-.product-bottom a {
-    display: inline-block;
-    padding: 10px 16px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.product-bottom a:hover {
-    opacity: 0.8;
-}
-
-```css
-/* =========================
-   CONTACT PAGE
-========================= */
-
-.contact-intro {
-    text-align: center;
-    max-width: 750px;
-    margin: 80px auto 60px;
-    padding: 0 20px;
-}
-
-.contact-intro .small-title {
-    font-size: 14px;
-    letter-spacing: 4px;
-    font-weight: bold;
-}
-
-.contact-intro h1 {
-    font-size: 48px;
-    line-height: 1.2;
-    margin: 15px 0 25px;
-}
-
-.contact-intro h1 span {
-    font-style: italic;
-}
-
-.contact-intro > p:last-child {
-    font-size: 17px;
-    line-height: 1.8;
-}
-
-
-/* =========================
-   CONTACT SECTION
-========================= */
-
-.contact-section {
-    width: 85%;
-    max-width: 1100px;
-    margin: 0 auto 80px;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    gap: 70px;
-}
-
-
-/* =========================
-   CONTACT INFORMATION
-========================= */
-
-.contact-info h2 {
-    font-size: 30px;
-    margin-bottom: 20px;
-}
-
-.contact-info > p {
-    font-size: 16px;
-    line-height: 1.8;
-    margin-bottom: 35px;
-}
-
-.contact-item {
-    margin-bottom: 30px;
-}
-
-.contact-item h3 {
-    font-size: 19px;
-    margin-bottom: 5px;
-}
-
-.contact-item p {
-    margin-bottom: 8px;
-}
-
-.contact-item a {
-    text-decoration: none;
-    font-weight: bold;
-}
-
-
-/* =========================
-   CONTACT FORM
-========================= */
-
-.contact-form h2 {
-    font-size: 30px;
-    margin-bottom: 25px;
-}
-
-.contact-form form {
-    display: flex;
-    flex-direction: column;
-}
-
-.contact-form label {
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    box-sizing: border-box;
-
-    padding: 13px;
-    margin-bottom: 20px;
-
-    border: 1px solid #ccc;
-    border-radius: 5px;
-
-    font-family: inherit;
-    font-size: 15px;
-
-    outline: none;
-}
-
-.contact-form textarea {
-    resize: vertical;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    border-color: #555;
-}
-
-
-/* =========================
-   SEND BUTTON
-========================= */
-
-.contact-form button {
-    width: fit-content;
-
-    padding: 14px 28px;
-
-    border: none;
-    border-radius: 5px;
-
-    font-size: 16px;
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-.contact-form button:hover {
-    opacity: 0.8;
-}
-
-
-/* =========================
-   PAGE NAVIGATION
-========================= */
-
-.page-navigation {
-    display: flex;
-    justify-content: space-between;
-
-    width: 85%;
-    max-width: 1100px;
-
-    margin: 0 auto 60px;
-}
-
-.page-navigation a {
-    text-decoration: none;
-    font-weight: bold;
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-footer {
-    text-align: center;
-
-    padding: 50px 20px;
-
-    margin-top: 50px;
-}
-
-footer .logo {
-    font-size: 28px;
-    margin-bottom: 10px;
-}
-
-footer p {
-    margin: 8px 0;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 768px) {
+    /* Contact */
 
     .contact-intro {
         margin-top: 50px;
@@ -761,526 +1230,23 @@ footer p {
 
     .contact-section {
         width: 90%;
-
         grid-template-columns: 1fr;
-
         gap: 50px;
     }
 
+    /* Page Navigation */
+
     .page-navigation {
-        width: 90%;
+        padding: 25px 5%;
+        gap: 15px;
     }
 
-}
-/* =========================
-   LOGIN + REGISTER
-========================= */
-
-.auth-section {
-    min-height: 75vh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 60px 20px;
-}
-
-
-.auth-box {
-    width: 100%;
-    max-width: 500px;
-
-    padding: 45px;
-
-    border: 1px solid #ddd;
-    border-radius: 10px;
-
-    box-sizing: border-box;
-
-    background: #fff;
-}
-
-
-.auth-box .small-title {
-    font-size: 13px;
-    letter-spacing: 4px;
-    font-weight: bold;
-
-    margin-bottom: 15px;
-}
-
-
-.auth-box h1 {
-    font-size: 40px;
-    line-height: 1.2;
-
-    margin-bottom: 20px;
-}
-
-
-.auth-box h1 span {
-    font-style: italic;
-}
-
-
-.auth-description {
-    font-size: 16px;
-    line-height: 1.7;
-
-    margin-bottom: 30px;
-}
-
-
-/* FORM */
-
-.auth-box form {
-    display: flex;
-    flex-direction: column;
-}
-
-
-.auth-box label {
-    font-size: 15px;
-    font-weight: bold;
-
-    margin-bottom: 8px;
-}
-
-
-.auth-box input {
-    width: 100%;
-    box-sizing: border-box;
-
-    padding: 14px;
-
-    margin-bottom: 20px;
-
-    border: 1px solid #ccc;
-    border-radius: 5px;
-
-    font-family: inherit;
-    font-size: 15px;
-
-    outline: none;
-}
-
-
-.auth-box input:focus {
-    border-color: #555;
-}
-
-
-/* BUTTON */
-
-.auth-box button {
-    width: 100%;
-
-    padding: 14px;
-
-    border: none;
-    border-radius: 5px;
-
-    font-size: 16px;
-    font-weight: bold;
-
-    cursor: pointer;
-
-    margin-top: 5px;
-}
-
-
-.auth-box button:hover {
-    opacity: 0.8;
-}
-
-
-/* LOGIN / REGISTER SWITCH */
-
-.auth-link {
-    text-align: center;
-
-    margin-top: 25px;
-
-    font-size: 15px;
-}
-
-
-.auth-link a {
-    font-weight: bold;
-
-    text-decoration: none;
-}
-
-
-/* MOBILE */
-
-@media (max-width: 768px) {
-
-    .auth-section {
-        padding: 40px 20px;
+    .page-navigation a {
+        padding: 12px 15px;
+        font-size: 13px;
     }
 
-    .auth-box {
-        padding: 30px 25px;
-    }
-
-    .auth-box h1 {
-        font-size: 32px;
-    }
-
-}
-
-/* =========================
-   AUTH VALIDATION MESSAGES
-========================= */
-
-.error-message {
-    display: block;
-
-    color: #c0392b;
-
-    font-size: 13px;
-
-    margin-top: -14px;
-
-    margin-bottom: 15px;
-
-    min-height: 18px;
-}
-
-.success-message {
-    color: #277a3d;
-
-    font-size: 14px;
-
-    font-weight: bold;
-
-    margin-top: 15px;
-
-    text-align: center;
-}
-
-/* =========================
-   AUTH ERROR & SUCCESS
-========================= */
-
-.error-message {
-    display: block;
-    color: #c0392b;
-    font-size: 13px;
-    margin-top: -14px;
-    margin-bottom: 15px;
-    min-height: 18px;
-}
-
-.success-message {
-    color: #277a3d;
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 15px;
-    text-align: center;
-}
-
-/* =====================================
-   BEAUTIFUL LOGIN / REGISTER PAGE
-===================================== */
-
-.auth-section {
-    min-height: calc(100vh - 80px);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 70px 20px;
-
-    background:
-        radial-gradient(circle at top left, #ead8a8 0%, transparent 30%),
-        radial-gradient(circle at bottom right, #d8c4a8 0%, transparent 30%),
-        #f5f0e7;
-}
-
-
-/* MAIN AUTH CARD */
-
-.auth-box {
-    width: 100%;
-    max-width: 520px;
-
-    padding: 45px 48px;
-
-    background: rgba(255, 253, 248, 0.97);
-
-    border: 1px solid #e0d2b8;
-    border-radius: 18px;
-
-    box-shadow:
-        0 20px 45px rgba(31, 42, 32, 0.12);
-
-    position: relative;
-    overflow: hidden;
-}
-
-
-/* GOLDEN TOP LINE */
-
-.auth-box::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 6px;
-
-    background: linear-gradient(
-        90deg,
-        #1f2a20,
-        #a4873b,
-        #d5bf82,
-        #a4873b,
-        #1f2a20
-    );
-}
-
-
-/* SMALL HEADING */
-
-.auth-box .small-title {
-    font-size: 13px;
-
-    letter-spacing: 4px;
-
-    font-weight: bold;
-
-    color: #a4873b;
-
-    margin-bottom: 12px;
-}
-
-
-/* MAIN HEADING */
-
-.auth-box h1 {
-    font-size: 42px;
-
-    line-height: 1.2;
-
-    margin-bottom: 16px;
-
-    color: #1f2a20;
-}
-
-
-.auth-box h1 span {
-    color: #a4873b;
-
-    font-style: italic;
-}
-
-
-/* DESCRIPTION */
-
-.auth-description {
-    font-size: 15px;
-
-    line-height: 1.7;
-
-    color: #6b6b63;
-
-    margin-bottom: 30px;
-}
-
-
-/* LABEL */
-
-.auth-box label {
-    display: block;
-
-    font-size: 14px;
-
-    font-weight: bold;
-
-    color: #1f2a20;
-
-    margin-bottom: 8px;
-}
-
-
-/* INPUT */
-
-.auth-box input {
-    width: 100%;
-
-    box-sizing: border-box;
-
-    padding: 14px 16px;
-
-    margin-bottom: 5px;
-
-    border: 1px solid #d7cbb8;
-
-    border-radius: 9px;
-
-    background-color: #fffefa;
-
-    color: #1f2a20;
-
-    font-family: inherit;
-
-    font-size: 15px;
-
-    transition: 0.3s;
-
-    outline: none;
-}
-
-
-/* INPUT HOVER */
-
-.auth-box input:hover {
-    border-color: #bca76e;
-}
-
-
-/* INPUT FOCUS */
-
-.auth-box input:focus {
-    border-color: #a4873b;
-
-    box-shadow: 0 0 0 3px rgba(164, 135, 59, 0.12);
-}
-
-
-/* ERROR */
-
-.error-message {
-    display: block;
-
-    min-height: 18px;
-
-    margin-top: 4px;
-
-    margin-bottom: 12px;
-
-    color: #c0392b;
-
-    font-size: 12px;
-}
-
-
-/* SUCCESS */
-
-.success-message {
-    color: #2f7d46;
-
-    font-size: 14px;
-
-    font-weight: bold;
-
-    text-align: center;
-
-    margin-top: 15px;
-}
-
-
-/* BUTTON */
-
-.auth-box button {
-    width: 100%;
-
-    padding: 15px;
-
-    margin-top: 8px;
-
-    border: none;
-
-    border-radius: 9px;
-
-    background: linear-gradient(
-        135deg,
-        #1f2a20,
-        #314332
-    );
-
-    color: white;
-
-    font-size: 16px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: 0.3s;
-
-    box-shadow: 0 8px 18px rgba(31, 42, 32, 0.18);
-}
-
-
-/* BUTTON HOVER */
-
-.auth-box button:hover {
-    background: linear-gradient(
-        135deg,
-        #a4873b,
-        #c8a95d
-    );
-
-    transform: translateY(-2px);
-
-    box-shadow: 0 10px 22px rgba(164, 135, 59, 0.25);
-}
-
-
-/* LOGIN / REGISTER LINK */
-
-.auth-link {
-    text-align: center;
-
-    margin-top: 24px;
-
-    color: #6b6b63;
-
-    font-size: 14px;
-}
-
-
-.auth-link a {
-    color: #a4873b;
-
-    font-weight: bold;
-
-    text-decoration: none;
-}
-
-
-.auth-link a:hover {
-    color: #1f2a20;
-
-    text-decoration: underline;
-}
-
-
-/* FOOTER */
-
-.auth-section + footer {
-    background-color: #1f2a20;
-
-    color: #f5f0e7;
-}
-
-
-.auth-section + footer .logo {
-    color: #d5bf82;
-}
-
-
-/* MOBILE */
-
-@media (max-width: 768px) {
+    /* Login Register */
 
     .auth-section {
         padding: 45px 15px;
@@ -1288,7 +1254,6 @@ footer p {
 
     .auth-box {
         padding: 38px 25px;
-
         border-radius: 15px;
     }
 
@@ -1296,4 +1261,98 @@ footer p {
         font-size: 34px;
     }
 
+    /* Wishlist */
+
+    #wishlistSection {
+        padding: 50px 5%;
+    }
+
+    #wishlistSection h2 {
+        font-size: 32px;
+    }
+
+    /* Search */
+
+    .search-wrapper {
+        margin: 20px auto 40px;
+    }
+
+    .search-heading h2 {
+        font-size: 25px;
+    }
+
+    .collection-search {
+        height: 52px;
+        padding-left: 15px;
+    }
+
+    .collection-search input {
+        font-size: 12px;
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE SCREEN
+========================= */
+
+@media (max-width: 480px) {
+
+    .logo {
+        font-size: 26px;
+    }
+
+    header nav {
+        gap: 12px;
+    }
+
+    header nav a {
+        font-size: 12px;
+    }
+
+    .header-auth a {
+        padding: 7px 16px;
+        font-size: 13px;
+    }
+
+    .header-auth .welcome-user {
+        font-size: 12px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero-image img {
+        height: 320px;
+    }
+
+    .card img {
+        height: 300px;
+    }
+
+    .story-image img {
+        height: 320px;
+    }
+
+    .process-image img {
+        height: 280px;
+    }
+
+    .page-navigation {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .page-navigation a {
+        text-align: center;
+    }
+
+    .auth-box {
+        padding: 35px 20px;
+    }
+
+    .auth-box h1 {
+        font-size: 30px;
+    }
 }
