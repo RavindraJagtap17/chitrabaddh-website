@@ -5,6 +5,9 @@
 <head>
     <title>Chitrabaddh | Login</title>
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -104,8 +107,11 @@
 
                     <p
                         class="success-message"
-                        id="login-success">
-                    </p>
+                        id="login-success">{% for message in get_flashed_messages(category_filter=["login_success"]) %}{{ message }}{% endfor %}</p>
+
+                    <p
+                        class="server-error"
+                        id="login-server-error">{% for message in get_flashed_messages(category_filter=["login_error"]) %}{{ message }}{% endfor %}</p>
 
                 </form>
 
@@ -259,6 +265,10 @@
                         id="register-success">
                     </p>
 
+                    <p
+                        class="server-error"
+                        id="register-server-error">{% for message in get_flashed_messages(category_filter=["register_error"]) %}{{ message }}{% endfor %}</p>
+
                 </form>
 
 
@@ -349,6 +359,7 @@
             document.getElementById("password-error").textContent = "";
             document.getElementById("confirm-error").textContent = "";
             document.getElementById("register-success").textContent = "";
+            document.getElementById("register-server-error").textContent = "";
 
             let valid = true;
 
@@ -469,6 +480,7 @@
             document.getElementById("login-email-error").textContent = "";
             document.getElementById("login-password-error").textContent = "";
             document.getElementById("login-success").textContent = "";
+            document.getElementById("login-server-error").textContent = "";
 
             let valid = true;
 
@@ -505,6 +517,15 @@
 
             return valid;
 
+        }
+
+
+        /* REOPEN REGISTER FORM AFTER A SERVER ERROR */
+        if (
+            new URLSearchParams(window.location.search).get("form") === "register" ||
+            document.getElementById("register-server-error").textContent.trim() !== ""
+        ) {
+            showRegister();
         }
 
     </script>

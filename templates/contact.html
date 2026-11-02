@@ -118,29 +118,35 @@
             feel free to get in touch with us.
         </p>
 
+        {% if whatsapp_number %}
         <div class="contact-item">
             <h3>WhatsApp</h3>
             <p>Chat with us directly</p>
-            <a href="https://wa.me/91XXXXXXXXXX" target="_blank">
+            <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener noreferrer">
                 Chat on WhatsApp →
             </a>
         </div>
+        {% endif %}
 
+        {% if contact_email %}
         <div class="contact-item">
             <h3>Email</h3>
             <p>Write to us anytime</p>
-            <a href="mailto:hello@chitrabaddh.com">
-                hello@chitrabaddh.com
+            <a href="mailto:{{ contact_email }}">
+                {{ contact_email }}
             </a>
         </div>
+        {% endif %}
 
+        {% if instagram_url %}
         <div class="contact-item">
             <h3>Instagram</h3>
             <p>Follow our art journey</p>
-            <a href="https://instagram.com/" target="_blank">
+            <a href="{{ instagram_url }}" target="_blank" rel="noopener noreferrer">
                 Follow us on Instagram →
             </a>
         </div>
+        {% endif %}
 
         <div class="contact-item">
             <h3>Location</h3>
@@ -151,28 +157,36 @@
     <div class="contact-form">
         <h2>Send us a message</h2>
 
+        {% if error %}
+            <p class="server-error">{{ error }}</p>
+        {% endif %}
+
         <form action="{{ url_for('contact') }}" method="POST">
 
             <label for="name">Your Name</label>
             <input type="text" id="name" name="name"
+                   value="{{ form.name if form else '' }}"
                    placeholder="Enter your name" required>
 
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email"
+                   value="{{ form.email if form else '' }}"
                    placeholder="Enter your email" required>
 
             <label for="phone">Phone Number</label>
             <input type="tel" id="phone" name="phone"
+                   value="{{ form.phone if form else '' }}"
                    placeholder="Enter your phone number">
 
             <label for="subject">Subject</label>
             <input type="text" id="subject" name="subject"
+                   value="{{ form.subject if form else '' }}"
                    placeholder="What would you like to ask?">
 
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="6"
                       placeholder="Write your message here..."
-                      required></textarea>
+                      required>{{ form.message if form else '' }}</textarea>
 
             <button type="submit">Send Message</button>
 

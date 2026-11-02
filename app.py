@@ -4,26 +4,39 @@ import smtplib
 from email.message import EmailMessage
 from urllib.parse import quote
 
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import mysql.connector
+from mysql.connector import errorcode
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 
-# Load .env file
-load_dotenv()
+# Load .env file from the project folder
+load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "change-this-secret-key")
+
+
+# ---------------- SITE CONTACT DETAILS ----------------
+
+@app.context_processor
+def contact_details():
+    return {
+        "whatsapp_number": os.getenv("WHATSAPP_NUMBER", "919834541457").strip(),
+        "contact_email": os.getenv("CONTACT_EMAIL", "").strip(),
+        "instagram_url": os.getenv("INSTAGRAM_URL", "").strip(),
+    }
 
 
 # ---------------- DATABASE CONNECTION ----------------
 
 def get_db_connection():
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password=os.getenv("DB_PASSWORD"),
-        database="chitrabaddh"
+        host=os.getenv("DB_HOST", "localhost"),
+        port=int(os.getenv("DB_PORT", "3306")),
+        user=os.getenv("DB_USER", "root"),
+        password=os.getenv("DB_PASSWORD", ""),
+        database=os.getenv("DB_NAME", "chitrabaddh")
     )
 
 
@@ -56,7 +69,8 @@ def register():
     password = request.form.get("password")
 
     if not all([name, email, phone, password]):
-        return "Please fill all required fields."
+        flash("Please fill all required fields.", "register_error")
+        return redirect(url_for("auth", form="register"))
 
     hashed_password = generate_password_hash(password)
 
@@ -75,11 +89,17 @@ def register():
         cursor.close()
         db.close()
 
+        flash("Account created successfully. Please login.", "login_success")
         return redirect(url_for("auth"))
 
     except mysql.connector.Error as error:
-        app.logger.exception("Registration failed")
-        return f"Registration error: {error}"
+        if error.errno == errorcode.ER_DUP_ENTRY:
+            flash("An account with this email already exists. Please login.", "register_error")
+        else:
+            app.logger.exception("Registration failed")
+            flash("We could not create your account right now. Please try again later.", "register_error")
+
+        return redirect(url_for("auth", form="register"))
 
 
 # ---------------- LOGIN ----------------
@@ -110,11 +130,13 @@ def login():
 
             return redirect(url_for("home"))
 
-        return "Invalid email or password."
+        flash("Invalid email or password.", "login_error")
+        return redirect(url_for("auth"))
 
-    except mysql.connector.Error as error:
+    except mysql.connector.Error:
         app.logger.exception("Login failed")
-        return f"Login error: {error}"
+        flash("We could not log you in right now. Please try again later.", "login_error")
+        return redirect(url_for("auth"))
 
 
 # ---------------- COLLECTION ----------------
@@ -156,7 +178,11 @@ def contact():
     message = request.form.get("message", "").strip()
 
     if not name or not email or not message:
-        return "Please fill in your name, email and message."
+        return render_template(
+            "contact.html",
+            error="Please fill in your name, email and message.",
+            form=request.form
+        ), 400
 
     gmail_user = os.getenv("GMAIL_USER", "").strip()
     gmail_app_password = os.getenv(
@@ -169,7 +195,11 @@ def contact():
     # Check email configuration
     if not all([gmail_user, gmail_app_password, receiver_email]):
         app.logger.error("Gmail configuration is missing in .env")
-        return "Email settings are missing. Please check your .env file.", 500
+        return render_template(
+            "contact.html",
+            error="Sorry, we could not send your message right now. Please reach us on WhatsApp instead.",
+            form=request.form
+        ), 500
 
     # Prepare email
     email_message = EmailMessage()
@@ -223,9 +253,13 @@ Message: {message}"""
             whatsapp_url=whatsapp_url
         )
 
-    except Exception as error:
+    except Exception:
         app.logger.exception("EMAIL SENDING FAILED")
-        return f"Email Error: {error}", 500
+        return render_template(
+            "contact.html",
+            error="Sorry, we could not send your message right now. Please try again or reach us on WhatsApp.",
+            form=request.form
+        ), 500
 
 
 # ---------------- LOGOUT ----------------
