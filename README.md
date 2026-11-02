@@ -76,7 +76,8 @@ chitrabaddh-website/
    | Variable | What it is |
    |---|---|
    | `SECRET_KEY` | Long random string. Generate one with `python -c "import secrets; print(secrets.token_hex(32))"` |
-   | `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` | MySQL connection. Defaults: `localhost`, `3306`, `root`, empty, `chitrabaddh` |
+   | `DB_ENGINE` | `mysql` (default) or `sqlite`. With `sqlite` no MySQL is needed: the database is the file `chitrabaddh.db`, created automatically (useful for free hosting such as PythonAnywhere) |
+   | `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` | MySQL connection (only for `DB_ENGINE=mysql`). Defaults: `localhost`, `3306`, `root`, empty, `chitrabaddh` |
    | `GMAIL_USER`, `GMAIL_APP_PASSWORD` | Gmail account that sends contact-form emails. Needs a 16-letter [Google app password](https://myaccount.google.com/apppasswords), not the normal Gmail password |
    | `RECEIVER_EMAIL` | Inbox that receives contact-form enquiries |
    | `WHATSAPP_NUMBER` | WhatsApp number with country code, digits only (e.g. `91XXXXXXXXXX`) |

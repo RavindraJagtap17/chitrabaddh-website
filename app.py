@@ -1,6 +1,7 @@
 
 import os
 import smtplib
+import sqlite3
 from email.message import EmailMessage
 from urllib.parse import quote
 
@@ -11,7 +12,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 
 # Load .env file from the project folder
-load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "change-this-secret-key")
@@ -30,7 +32,24 @@ def contact_details():
 
 # ---------------- DATABASE CONNECTION ----------------
 
+# "mysql" (default, for local XAMPP) or "sqlite" (for free hosting)
+DB_ENGINE = os.getenv("DB_ENGINE", "mysql").strip().lower()
+USE_SQLITE = DB_ENGINE == "sqlite"
+
+SQLITE_PATH = os.getenv("SQLITE_PATH", "").strip() or os.path.join(BASE_DIR, "chitrabaddh.db")
+
+# SQL placeholder style differs between the two databases
+PLACEHOLDER = "?" if USE_SQLITE else "%s"
+
+DB_ERRORS = (mysql.connector.Error, sqlite3.Error)
+
+
 def get_db_connection():
+    if USE_SQLITE:
+        db = sqlite3.connect(SQLITE_PATH)
+        db.row_factory = sqlite3.Row
+        return db
+
     return mysql.connector.connect(
         host=os.getenv("DB_HOST", "localhost"),
         port=int(os.getenv("DB_PORT", "3306")),
@@ -38,6 +57,38 @@ def get_db_connection():
         password=os.getenv("DB_PASSWORD", ""),
         database=os.getenv("DB_NAME", "chitrabaddh")
     )
+
+
+def get_dict_cursor(db):
+    # SQLite rows already allow row["column"] because of row_factory
+    return db.cursor() if USE_SQLITE else db.cursor(dictionary=True)
+
+
+def is_duplicate_entry(error):
+    if isinstance(error, sqlite3.IntegrityError):
+        return True
+
+    return getattr(error, "errno", None) == errorcode.ER_DUP_ENTRY
+
+
+def create_sqlite_tables():
+    db = sqlite3.connect(SQLITE_PATH)
+    db.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            user_id     INTEGER PRIMARY KEY AUTOINCREMENT,
+            name        TEXT NOT NULL,
+            email       TEXT NOT NULL UNIQUE,
+            phone       TEXT NOT NULL,
+            password    TEXT NOT NULL,
+            created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    db.commit()
+    db.close()
+
+
+if USE_SQLITE:
+    create_sqlite_tables()
 
 
 # ---------------- HOME ----------------
@@ -74,32 +125,36 @@ def register():
 
     hashed_password = generate_password_hash(password)
 
+    db = None
+
     try:
         db = get_db_connection()
         cursor = db.cursor()
 
-        query = """
+        query = f"""
             INSERT INTO users (name, email, phone, password)
-            VALUES (%s, %s, %s, %s)
+            VALUES ({PLACEHOLDER}, {PLACEHOLDER}, {PLACEHOLDER}, {PLACEHOLDER})
         """
 
         cursor.execute(query, (name, email, phone, hashed_password))
         db.commit()
 
-        cursor.close()
-        db.close()
-
         flash("Account created successfully. Please login.", "login_success")
         return redirect(url_for("auth"))
 
-    except mysql.connector.Error as error:
-        if error.errno == errorcode.ER_DUP_ENTRY:
+    except DB_ERRORS as error:
+        if is_duplicate_entry(error):
             flash("An account with this email already exists. Please login.", "register_error")
         else:
             app.logger.exception("Registration failed")
             flash("We could not create your account right now. Please try again later.", "register_error")
 
         return redirect(url_for("auth", form="register"))
+
+    finally:
+        # Always close, so a failed insert never leaves SQLite locked
+        if db is not None:
+            db.close()
 
 
 # ---------------- LOGIN ----------------
@@ -111,17 +166,19 @@ def login():
 
     try:
         db = get_db_connection()
-        cursor = db.cursor(dictionary=True)
 
-        cursor.execute(
-            "SELECT * FROM users WHERE email = %s",
-            (email,)
-        )
+        try:
+            cursor = get_dict_cursor(db)
 
-        user = cursor.fetchone()
+            cursor.execute(
+                f"SELECT * FROM users WHERE email = {PLACEHOLDER}",
+                (email,)
+            )
 
-        cursor.close()
-        db.close()
+            user = cursor.fetchone()
+
+        finally:
+            db.close()
 
         if user and check_password_hash(user["password"], password):
             session["user_id"] = user["user_id"]
@@ -133,7 +190,7 @@ def login():
         flash("Invalid email or password.", "login_error")
         return redirect(url_for("auth"))
 
-    except mysql.connector.Error:
+    except DB_ERRORS:
         app.logger.exception("Login failed")
         flash("We could not log you in right now. Please try again later.", "login_error")
         return redirect(url_for("auth"))
