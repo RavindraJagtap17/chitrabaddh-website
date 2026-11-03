@@ -1,0 +1,49 @@
+{# Used on the home page and on /story. Set title_tag to "h1" on the standalone page. #}
+{% set tag = title_tag or "h2" %}
+
+<section class="story" id="story">
+
+    <div class="story-image reveal">
+        <img src="{{ url_for('static', filename='image/art29.jpeg.jpeg') }}"
+             alt="Chitrabaddh handmade artwork"
+             loading="lazy">
+    </div>
+
+    <div class="story-text reveal">
+
+        <p class="small-title">OUR STORY</p>
+
+        <{{ tag }} class="section-title">
+            Where art meets
+            <span>emotion.</span>
+        </{{ tag }}>
+
+        <div class="story-content">
+            <h3><span>01</span> Brand Introduction</h3>
+            <p>
+                Chitrabaddh is a celebration of handmade art,
+                inspired by Indian traditions, nature and
+                everyday beauty.
+            </p>
+        </div>
+
+        <div class="story-content">
+            <h3><span>02</span> About Our Art</h3>
+            <p>
+                Every artwork is thoughtfully created with love,
+                patience and attention to detail, bringing
+                stories and emotions to your walls.
+            </p>
+        </div>
+
+        <div class="story-content">
+            <h3><span>03</span> Our Aim</h3>
+            <p>
+                Our aim is to create meaningful artworks that
+                add warmth, beauty and personality to every space.
+            </p>
+        </div>
+
+    </div>
+
+</section>

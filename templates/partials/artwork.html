@@ -1,0 +1,52 @@
+{# One product card. Ordering goes through /order, which asks for login only at that moment. #}
+{% macro art_card(art) %}
+<div class="card"
+     data-id="{{ art.id }}"
+     data-category="{{ art.category }}"
+     data-search="{{ (art.name ~ ' ' ~ art.category ~ ' ' ~ art.description)|lower }}">
+
+    <button class="wishlist-heart"
+            type="button"
+            data-id="{{ art.id }}"
+            aria-label="Add to wishlist">
+        <svg viewBox="0 0 24 24">
+            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8z"/>
+        </svg>
+    </button>
+
+    <div class="card-image">
+        <img src="{{ url_for('static', filename='image/' ~ art.image) }}"
+             alt="{{ art.name }}"
+             loading="lazy">
+    </div>
+
+    <div class="card-content">
+
+        <h3>{{ art.name }}</h3>
+
+        <p>{{ art.description }}</p>
+
+        <div class="product-bottom">
+
+            <strong>₹{{ "{:,}".format(art.price) }}</strong>
+
+            <a href="{{ url_for('order', art_id=art.id) }}"
+               {% if session.get('user_id') %}target="_blank" rel="noopener noreferrer"{% endif %}>
+                Order on WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+{% endmacro %}
+
+
+{# Full-screen image viewer, opened by clicking any card image #}
+{% macro image_modal() %}
+<div class="image-modal" id="imageModal" aria-hidden="true">
+    <button class="close-modal" type="button" aria-label="Close">&times;</button>
+    <img id="modalImage" src="" alt="Artwork preview">
+</div>
+{% endmacro %}

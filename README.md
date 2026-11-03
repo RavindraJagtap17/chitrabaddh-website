@@ -15,12 +15,12 @@ Chitrabhdha is a web-based platform designed to showcase art, creativity, storie
 
 ## ✨ Features
 
-- 🏠 Home page
-- 🔐 User Authentication
-- 🎨 Art Collection
+- 🏠 One long scrolling home page: Collection, Our Story, Process and Contact sections, with a sticky menu that highlights the current section
+- 🎨 Art Collection that anyone can browse, with search, wishlist and image zoom
+- 🔐 Login / sign-up asked only when ordering; after login the visitor goes straight to WhatsApp for the chosen artwork
 - 📖 Stories
 - ⚙️ Art Process Section
-- 📩 Contact Page
+- 📩 Contact Page with a location card that opens Google Maps
 - 🗄️ MySQL Database Integration
 - 🌐 Flask Backend
 - 📱 User-friendly Web Interface
@@ -37,6 +37,7 @@ chitrabaddh-website/
 │
 ├── static/
 │   ├── style.css
+│   ├── main.js
 │   └── image/
 │
 ├── templates/
@@ -46,7 +47,8 @@ chitrabaddh-website/
 │   ├── contact.html
 │   ├── contact_success.html
 │   ├── process.html
-│   └── story.html
+│   ├── story.html
+│   └── partials/        (header, footer, artwork card and page sections shared by the pages)
 │
 └── README.md
 ```
