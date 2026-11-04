@@ -16,8 +16,11 @@ load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "change-this-secret-key")
 
-# Google Maps link for our location (Contact section)
-MAP_URL = "https://maps.app.goo.gl/NdSchyGmmvv7dekL7"
+# Our location on Google Maps (Contact section).
+# Change MAP_PLACE to the exact address or business name to move the pin.
+MAP_PLACE = "Sangli, Maharashtra, India"
+MAP_URL = f"https://www.google.com/maps/search/?api=1&query={quote(MAP_PLACE)}"
+MAP_EMBED_URL = f"https://maps.google.com/maps?q={quote(MAP_PLACE)}&z=13&output=embed"
 
 
 # ---------------- ARTWORKS ----------------
@@ -76,6 +79,8 @@ def contact_details():
         "contact_email": os.getenv("CONTACT_EMAIL", "").strip(),
         "instagram_url": os.getenv("INSTAGRAM_URL", "").strip(),
         "map_url": MAP_URL,
+        "map_embed_url": MAP_EMBED_URL,
+        "map_place": MAP_PLACE,
     }
 
 
