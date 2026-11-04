@@ -1,0 +1,36 @@
+<footer class="site-footer">
+
+    <div class="footer-grid">
+
+        <div class="footer-brand">
+            <a class="logo" href="{{ url_for('home') }}#top">चित्रबद्ध</a>
+            <p>Handmade art created with emotion, inspired by nature and Indian traditions.</p>
+        </div>
+
+        <div class="footer-links">
+            <h4>Explore</h4>
+            <a href="{{ url_for('home') }}#collection">Collection</a>
+            <a href="{{ url_for('home') }}#story">Our Story</a>
+            <a href="{{ url_for('home') }}#process">Process</a>
+            <a href="{{ url_for('home') }}#contact">Contact</a>
+        </div>
+
+        <div class="footer-links">
+            <h4>Get in touch</h4>
+            {% if whatsapp_number %}
+                <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            {% endif %}
+            {% if contact_email %}
+                <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+            {% endif %}
+            {% if instagram_url %}
+                <a href="{{ instagram_url }}" target="_blank" rel="noopener noreferrer">Instagram</a>
+            {% endif %}
+            <a href="{{ map_url }}" target="_blank" rel="noopener noreferrer">Sangli, Maharashtra</a>
+        </div>
+
+    </div>
+
+    <p class="footer-copy">© 2026 Chitrabaddh. All rights reserved.</p>
+
+</footer>

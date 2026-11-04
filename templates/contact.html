@@ -1,210 +1,25 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <title>Chitrabaddh | Contact</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <style>
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .header-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 12px;
-        }
-
-        .header-auth {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .header-auth a {
-            text-decoration: none;
-            color: #1f2a20;
-            font-size: 14px;
-            font-weight: 600;
-            border: 1px solid #a4873b;
-            padding: 7px 18px;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-
-        .header-auth a:hover {
-            background: #a4873b;
-            color: white;
-        }
-
-        .welcome-user {
-            color: #1f2a20;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .header-right {
-                align-items: center;
-                width: 100%;
-            }
-
-            nav {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 12px;
-            }
-        }
-    </style>
+    {% include "partials/head.html" %}
 </head>
 
 <body>
 
-<header>
-    <div class="logo">चित्रबद्ध</div>
+    {% include "partials/header.html" %}
 
-    <div class="header-right">
-        <div class="header-auth">
-            {% if session.get('user_id') %}
-                <span class="welcome-user">Hi, {{ session.get('name') }}</span>
-                <a href="{{ url_for('logout') }}">Logout</a>
-            {% else %}
-                <a href="{{ url_for('auth') }}">Login</a>
-            {% endif %}
-        </div>
+    {% with title_tag = "h1" %}
+        {% include "partials/contact_section.html" %}
+    {% endwith %}
 
-        <nav>
-            <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('collection') }}">Collection</a>
-            <a href="{{ url_for('story') }}">Our Story</a>
-            <a href="{{ url_for('process') }}">Process</a>
-            <a href="{{ url_for('contact') }}">Contact</a>
-        </nav>
-    </div>
-</header>
-
-<section class="contact-intro">
-    <p class="small-title">GET IN TOUCH</p>
-
-    <h1>Let's talk about <span>art.</span></h1>
-
-    <p>
-        Have a question about an artwork, want to place an
-        order, or looking for a custom piece? We would love
-        to hear from you.
-    </p>
-</section>
-
-<section class="contact-section">
-
-    <div class="contact-info">
-        <h2>We'd love to hear from you.</h2>
-
-        <p>
-            Whether you have a question about our artworks,
-            want to place an order, or need a custom artwork,
-            feel free to get in touch with us.
-        </p>
-
-        {% if whatsapp_number %}
-        <div class="contact-item">
-            <h3>WhatsApp</h3>
-            <p>Chat with us directly</p>
-            <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener noreferrer">
-                Chat on WhatsApp →
-            </a>
-        </div>
-        {% endif %}
-
-        {% if contact_email %}
-        <div class="contact-item">
-            <h3>Email</h3>
-            <p>Write to us anytime</p>
-            <a href="mailto:{{ contact_email }}">
-                {{ contact_email }}
-            </a>
-        </div>
-        {% endif %}
-
-        {% if instagram_url %}
-        <div class="contact-item">
-            <h3>Instagram</h3>
-            <p>Follow our art journey</p>
-            <a href="{{ instagram_url }}" target="_blank" rel="noopener noreferrer">
-                Follow us on Instagram →
-            </a>
-        </div>
-        {% endif %}
-
-        <div class="contact-item">
-            <h3>Location</h3>
-            <p>Sangli Maharashtra, India</p>
-        </div>
+    <div class="page-navigation">
+        <a href="{{ url_for('process') }}">← Our Process</a>
+        <a href="{{ url_for('home') }}">Back to Home →</a>
     </div>
 
-    <div class="contact-form">
-        <h2>Send us a message</h2>
-
-        {% if error %}
-            <p class="server-error">{{ error }}</p>
-        {% endif %}
-
-        <form action="{{ url_for('contact') }}" method="POST">
-
-            <label for="name">Your Name</label>
-            <input type="text" id="name" name="name"
-                   value="{{ form.name if form else '' }}"
-                   placeholder="Enter your name" required>
-
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email"
-                   value="{{ form.email if form else '' }}"
-                   placeholder="Enter your email" required>
-
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone"
-                   value="{{ form.phone if form else '' }}"
-                   placeholder="Enter your phone number">
-
-            <label for="subject">Subject</label>
-            <input type="text" id="subject" name="subject"
-                   value="{{ form.subject if form else '' }}"
-                   placeholder="What would you like to ask?">
-
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="6"
-                      placeholder="Write your message here..."
-                      required>{{ form.message if form else '' }}</textarea>
-
-            <button type="submit">Send Message</button>
-
-        </form>
-    </div>
-
-</section>
-
-<div class="page-navigation">
-    <a href="{{ url_for('process') }}">← Back to Our Process</a>
-    <a href="{{ url_for('home') }}">Back to Home →</a>
-</div>
-
-<footer>
-    <div class="logo">चित्रबद्ध</div>
-    <p>Handmade art created with emotion.</p>
-    <p>© 2026 Chitrabaddh. All rights reserved.</p>
-</footer>
+    {% include "partials/footer.html" %}
 
 </body>
 </html>

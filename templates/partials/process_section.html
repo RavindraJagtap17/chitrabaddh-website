@@ -1,0 +1,52 @@
+{# Used on the home page and on /process. Set title_tag to "h1" on the standalone page. #}
+{% set tag = title_tag or "h2" %}
+
+{% set steps = [
+    ("art33.jpeg.jpeg", "Art inspiration", "Inspiration",
+     "Every beautiful artwork begins with an idea. We find inspiration in nature, flowers, leaves and traditional Indian art. These little details help us imagine something unique and beautiful."),
+    ("art34.jpeg.jpeg", "Artwork designing", "Designing",
+     "Once we have an idea, we start planning the artwork. We sketch the design, select suitable colours and carefully decide every little detail."),
+    ("art35.jpeg.jpeg", "Handmade artwork creation", "Handmade Creation",
+     "This is where the magic happens. Every artwork is carefully created by hand using colours, brushes and creative techniques. Each piece receives individual attention and care."),
+    ("art36.jpeg.jpeg", "Finished handmade artwork", "Final Touch",
+     "Finally, we carefully complete the finishing details and check the artwork. Each creation is then packed with care, ready to bring beauty and happiness to its new home."),
+] %}
+
+<section class="process" id="process">
+
+    <div class="section-intro reveal">
+        <p class="small-title">BEHIND EVERY CREATION</p>
+
+        <{{ tag }} class="section-title">Our Creative <span>Process</span></{{ tag }}>
+
+        <p>
+            Every artwork has a beautiful journey.
+            From the first inspiration to the final touch,
+            each creation is made with patience, creativity
+            and love.
+        </p>
+    </div>
+
+    <div class="process-container">
+
+        {% for image, alt, title, text in steps %}
+        <div class="process-step reveal {{ 'reverse' if loop.index is even }}">
+
+            <div class="process-image">
+                <img src="{{ url_for('static', filename='image/' ~ image) }}"
+                     alt="{{ alt }}"
+                     loading="lazy">
+            </div>
+
+            <div class="process-text">
+                <span class="step-number">STEP {{ "%02d"|format(loop.index) }}</span>
+                <h3>{{ title }}</h3>
+                <p>{{ text }}</p>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</section>

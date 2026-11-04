@@ -1,0 +1,67 @@
+{# Shared header. Every link points to a section of the long home page. #}
+{% set page = request.endpoint %}
+
+<header class="site-header" id="siteHeader">
+
+    <a class="logo" href="{{ url_for('home') }}#top">चित्रबद्ध</a>
+
+    <button class="nav-toggle"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="siteNav">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <nav class="site-nav" id="siteNav">
+
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}#top"
+               data-section="top"
+               class="{{ 'active' if page == 'home' }}">Home</a>
+
+            <a href="{{ url_for('home') }}#collection"
+               data-section="collection"
+               class="{{ 'active' if page == 'collection' }}">Collection</a>
+
+            <a href="{{ url_for('home') }}#story"
+               data-section="story"
+               class="{{ 'active' if page == 'story' }}">Our Story</a>
+
+            <a href="{{ url_for('home') }}#process"
+               data-section="process"
+               class="{{ 'active' if page == 'process' }}">Process</a>
+
+            <a href="{{ url_for('home') }}#contact"
+               data-section="contact"
+               class="{{ 'active' if page == 'contact' }}">Contact</a>
+        </div>
+
+        <div class="nav-auth">
+            {% if session.get('user_id') %}
+
+                <span class="welcome-user">Hi, {{ session.get('name') }}</span>
+
+                <a class="nav-btn" href="{{ url_for('logout') }}">Logout</a>
+
+            {% elif page != 'auth' %}
+
+                <a class="nav-btn" href="{{ url_for('auth', next=request.path) }}">Login</a>
+
+            {% endif %}
+        </div>
+
+    </nav>
+
+</header>
+
+{# Messages shown on any page (for example after signing up) #}
+{% with messages = get_flashed_messages(category_filter=["site_success"]) %}
+    {% if messages %}
+        <div class="site-toast" role="status">
+            {% for message in messages %}{{ message }}{% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}

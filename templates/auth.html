@@ -1,41 +1,29 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>Chitrabaddh | Login</title>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    {% include "partials/head.html" %}
 </head>
 
 <body>
 
-    <!-- HEADER -->
-    <header>
-
-        <div class="logo">
-            चित्रबद्ध
-        </div>
-
-        <nav>
-            <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('collection') }}">Collection</a>
-            <a href="{{ url_for('story') }}">Our Story</a>
-            <a href="{{ url_for('process') }}">Process</a>
-            <a href="{{ url_for('contact') }}">Contact</a>
-        </nav>
-
-    </header>
+    {% include "partials/header.html" %}
 
 
     <!-- AUTH SECTION -->
     <section class="auth-section">
 
         <div class="auth-box">
+
+            {# Shown when a visitor tried to order before logging in #}
+            {% with messages = get_flashed_messages(category_filter=["auth_info"]) %}
+                {% if messages %}
+                    <p class="auth-info">
+                        {% for message in messages %}{{ message }}{% endfor %}
+                    </p>
+                {% endif %}
+            {% endwith %}
 
             <!-- LOGIN FORM -->
             <div id="login-form">
@@ -50,8 +38,8 @@
                 </h1>
 
                 <p class="auth-description">
-                    Login to your account and continue exploring
-                    our handmade artworks.
+                    Login to your account to order your
+                    favourite handmade artworks.
                 </p>
 
                 <form
@@ -61,6 +49,10 @@
                     onsubmit="return validateLogin()"
                     autocomplete="off"
                 >
+
+                    {% if next_url %}
+                        <input type="hidden" name="next" value="{{ next_url }}">
+                    {% endif %}
 
                     <!-- EMAIL -->
                     <label for="login-email">
@@ -157,6 +149,10 @@
                     onsubmit="return validateRegister()"
                     autocomplete="off"
                 >
+
+                    {% if next_url %}
+                        <input type="hidden" name="next" value="{{ next_url }}">
+                    {% endif %}
 
                     <!-- NAME -->
                     <label for="register-name">
@@ -289,22 +285,7 @@
     </section>
 
 
-    <!-- FOOTER -->
-    <footer>
-
-        <div class="logo">
-            चित्रबद्ध
-        </div>
-
-        <p>
-            Handmade art created with emotion.
-        </p>
-
-        <p>
-            © 2026 Chitrabaddh. All rights reserved.
-        </p>
-
-    </footer>
+    {% include "partials/footer.html" %}
 
 
     <!-- JAVASCRIPT -->

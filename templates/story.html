@@ -1,221 +1,25 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Chitrabaddh | Our Story</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-
-    <style>
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .header-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 12px;
-        }
-
-        .header-auth {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .header-auth a {
-            text-decoration: none;
-            color: #1f2a20;
-            font-size: 14px;
-            font-weight: 600;
-            border: 1px solid #a4873b;
-            padding: 7px 18px;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-
-        .header-auth a:hover {
-            background: #a4873b;
-            color: white;
-        }
-
-        .welcome-user {
-            color: #1f2a20;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .header-right {
-                align-items: center;
-                width: 100%;
-            }
-
-            nav {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 12px;
-            }
-        }
-    </style>
+    {% include "partials/head.html" %}
 </head>
 
 <body>
 
-    <!-- HEADER -->
+    {% include "partials/header.html" %}
 
-    <header>
-
-        <div class="logo">
-            चित्रबद्ध
-        </div>
-
-        <div class="header-right">
-
-            <div class="header-auth">
-
-                {% if session.get('user_id') %}
-
-                    <span class="welcome-user">
-                        Hi, {{ session.get('name') }}
-                    </span>
-
-                    <a href="{{ url_for('logout') }}">Logout</a>
-
-                {% else %}
-
-                    <a href="{{ url_for('auth') }}">Login</a>
-
-                {% endif %}
-
-            </div>
-
-            <nav>
-                <a href="{{ url_for('home') }}">Home</a>
-                <a href="{{ url_for('collection') }}">Collection</a>
-                <a href="{{ url_for('story') }}">Our Story</a>
-                <a href="{{ url_for('process') }}">Process</a>
-                <a href="{{ url_for('contact') }}">Contact</a>
-            </nav>
-
-        </div>
-
-    </header>
-
-
-    <!-- OUR STORY SECTION -->
-
-    <section class="story">
-
-        <!-- STORY IMAGE -->
-
-        <div class="story-image">
-
-            <img
-                src="{{ url_for('static', filename='image/art29.jpeg.jpeg') }}"
-                alt="Chitrabaddh Handmade Artwork"
-            >
-
-        </div>
-
-
-        <!-- STORY CONTENT -->
-
-        <div class="story-text">
-
-            <p class="small-title">
-                OUR STORY
-            </p>
-
-            <h1>
-                Where art meets
-                <span>emotion.</span>
-            </h1>
-
-
-            <!-- BRAND INTRODUCTION -->
-
-            <div class="story-content">
-
-                <h3>
-                    <span>01</span> Brand Introduction
-                </h3>
-
-                <p>
-                    Chitrabaddh is a celebration of handmade art,
-                    inspired by Indian traditions, nature and
-                    everyday beauty.
-                </p>
-
-            </div>
-
-
-            <!-- ABOUT OUR ART -->
-
-            <div class="story-content">
-
-                <h3>
-                    <span>02</span> About Our Art
-                </h3>
-
-                <p>
-                    Every artwork is thoughtfully created with love,
-                    patience and attention to detail, bringing
-                    stories and emotions to your walls.
-                </p>
-
-            </div>
-
-
-            <!-- OUR AIM -->
-
-            <div class="story-content">
-
-                <h3>
-                    <span>03</span> Our Aim
-                </h3>
-
-                <p>
-                    Our aim is to create meaningful artworks that
-                    add warmth, beauty and personality to every space.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- PAGE NAVIGATION -->
+    {% with title_tag = "h1" %}
+        {% include "partials/story_section.html" %}
+    {% endwith %}
 
     <div class="page-navigation">
-
-        <a href="{{ url_for('collection') }}">
-            ← Back to Collection
-        </a>
-
-        <a href="{{ url_for('process') }}">
-            Next: Our Process →
-        </a>
-
+        <a href="{{ url_for('collection') }}">← Collection</a>
+        <a href="{{ url_for('process') }}">Next: Our Process →</a>
     </div>
 
+    {% include "partials/footer.html" %}
 
 </body>
 </html>

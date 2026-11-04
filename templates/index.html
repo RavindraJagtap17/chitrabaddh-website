@@ -1,175 +1,23 @@
-
+{% from "partials/artwork.html" import art_card, image_modal with context %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>Chitrabaddh | Handmade Art</title>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-
-    <style>
-        /* Image Zoom Modal */
-        .image-modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .image-modal img {
-            max-width: 90%;
-            max-height: 85vh;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 35px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-        }
-
-        .hero-image img {
-            cursor: zoom-in;
-        }
-
-        /* Header Right Section */
-        .header-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        /* Login / Logout Above Navigation */
-        .header-auth {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 15px;
-            padding: 8px 0 12px;
-        }
-
-        .header-auth a {
-            display: inline-block;
-            padding: 8px 18px;
-            border: 1px solid #a4873b;
-            border-radius: 5px;
-            color: #a4873b;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: 0.3s ease;
-        }
-
-        .header-auth a:hover {
-            background: #a4873b;
-            color: white;
-        }
-
-        .welcome-user {
-            color: #1f2a20;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        /* Responsive Header */
-        @media (max-width: 768px) {
-            .header-right {
-                align-items: center;
-                width: 100%;
-            }
-
-            .header-auth {
-                justify-content: center;
-            }
-        }
-    </style>
+    {% include "partials/head.html" %}
 </head>
 
-<body>
+<body class="home-page">
 
-    <!-- HEADER -->
-    <header>
-
-        <div class="logo">
-            चित्रबद्ध
-        </div>
-
-        <div class="header-right">
-
-            <!-- LOGIN / LOGOUT ABOVE NAVIGATION -->
-            <div class="header-auth">
-
-                {% if session.get('user_id') %}
-
-                    <span class="welcome-user">
-                        Hi, {{ session.get('name') }}
-                    </span>
-
-                    <a href="{{ url_for('logout') }}">
-                        Logout
-                    </a>
-
-                {% else %}
-
-                    <a href="{{ url_for('auth') }}">
-                        Login
-                    </a>
-
-                {% endif %}
-
-            </div>
-
-            <!-- NAVIGATION -->
-            <nav>
-
-                <a href="{{ url_for('home') }}">Home</a>
-
-                <a href="{{ url_for('collection') }}">
-                    Collection
-                </a>
-
-                <a href="{{ url_for('story') }}">
-                    Our Story
-                </a>
-
-                <a href="{{ url_for('process') }}">
-                    Process
-                </a>
-
-                <a href="{{ url_for('contact') }}">
-                    Contact
-                </a>
-
-            </nav>
-
-        </div>
-
-    </header>
+    {% include "partials/header.html" %}
 
 
-    <!-- HERO SECTION -->
-    <section class="hero">
+    <!-- HERO -->
+    <section class="hero" id="top">
 
-        <div class="hero-text">
+        <div class="hero-text reveal">
 
-            <p class="small-title">
-                HANDMADE • INDIAN ART • SANGLI
-            </p>
+            <p class="small-title">HANDMADE • INDIAN ART • SANGLI</p>
 
             <h1>
                 Art that brings
@@ -183,75 +31,68 @@
                 and everyday beauty.
             </p>
 
-            <!-- EXPLORE COLLECTION BUTTON -->
-            <a href="{{ url_for('collection') }}"
-               class="explore-btn">
-                Explore Collection
-            </a>
+            <div class="hero-actions">
+                <a href="#collection" class="explore-btn">Explore Collection</a>
+                <a href="#story" class="ghost-btn">Our Story</a>
+            </div>
 
         </div>
 
+        <div class="hero-image reveal">
+            <img src="{{ url_for('static', filename='image/art1.jpeg.jpeg') }}"
+                 alt="Chitrabaddh artwork"
+                 class="zoomable">
+        </div>
 
-        <div class="hero-image">
+        <a href="#collection" class="scroll-hint" aria-label="Scroll down">
+            <span></span>
+        </a>
 
-            <img
-                src="{{ url_for('static', filename='image/art1.jpeg.jpeg') }}"
-                alt="Chitrabaddh Artwork"
-                onclick="openImage(this.src)"
-            >
+    </section>
 
+
+    <!-- COLLECTION PREVIEW -->
+    <section class="collection" id="collection">
+
+        <div class="collection-heading reveal">
+            <p class="small-title">CURATED ARTWORKS</p>
+            <h2 class="section-title">Our <span>Collection</span></h2>
+            <p>
+                A few favourites from our Botanical, Floral and Pichwai collections.
+                Browse freely, and login only when you are ready to order.
+            </p>
+        </div>
+
+        <div class="gallery">
+            {% for art in artworks %}
+                {{ art_card(art) }}
+            {% endfor %}
+        </div>
+
+        <div class="section-cta reveal">
+            <a href="{{ url_for('collection') }}" class="explore-btn">
+                View Full Collection (30 artworks) →
+            </a>
         </div>
 
     </section>
 
 
-    <!-- FULL IMAGE PREVIEW -->
-    <div class="image-modal" id="imageModal">
-
-        <span class="close-modal"
-              onclick="closeImage()">×</span>
-
-        <img id="fullImage" src="" alt="Full Size Artwork">
-
-    </div>
+    <!-- OUR STORY -->
+    {% include "partials/story_section.html" %}
 
 
-    <!-- JAVASCRIPT -->
-    <script>
+    <!-- OUR PROCESS -->
+    {% include "partials/process_section.html" %}
 
-        function openImage(imageSrc) {
 
-            document.getElementById("fullImage").src = imageSrc;
+    <!-- CONTACT -->
+    {% include "partials/contact_section.html" %}
 
-            document.getElementById("imageModal").style.display = "flex";
 
-        }
+    {% include "partials/footer.html" %}
 
-        function closeImage() {
-
-            document.getElementById("imageModal").style.display = "none";
-
-        }
-
-        // Close modal when clicking outside the image
-        document.getElementById("imageModal").addEventListener("click", function(event) {
-
-            if (event.target === this) {
-                closeImage();
-            }
-
-        });
-
-        // Close modal using Escape key
-        document.addEventListener("keydown", function(event) {
-
-            if (event.key === "Escape") {
-                closeImage();
-            }
-
-        });
-
-    </script>
+    {{ image_modal() }}
 
 </body>
 </html>

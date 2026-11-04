@@ -1,245 +1,25 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Process | Chitrabaddh</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <style>
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .header-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 12px;
-        }
-
-        .header-auth {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .header-auth a {
-            text-decoration: none;
-            color: #1f2a20;
-            font-size: 14px;
-            font-weight: 600;
-            border: 1px solid #a4873b;
-            padding: 7px 18px;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-
-        .header-auth a:hover {
-            background: #a4873b;
-            color: white;
-        }
-
-        .welcome-user {
-            color: #1f2a20;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .header-right {
-                align-items: center;
-                width: 100%;
-            }
-
-            nav {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 12px;
-            }
-        }
-    </style>
+    <title>Chitrabaddh | Our Process</title>
+    {% include "partials/head.html" %}
 </head>
+
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <div class="logo">Chitrabaddh</div>
+    {% include "partials/header.html" %}
 
-        <div class="header-right">
+    {% with title_tag = "h1" %}
+        {% include "partials/process_section.html" %}
+    {% endwith %}
 
-            <div class="header-auth">
-
-                {% if session.get('user_id') %}
-
-                    <span class="welcome-user">
-                        Hi, {{ session.get('name') }}
-                    </span>
-
-                    <a href="{{ url_for('logout') }}">Logout</a>
-
-                {% else %}
-
-                    <a href="{{ url_for('auth') }}">Login</a>
-
-                {% endif %}
-
-            </div>
-
-            <nav>
-                <a href="{{ url_for('home') }}">Home</a>
-                <a href="{{ url_for('collection') }}">Collection</a>
-                <a href="{{ url_for('story') }}">Our Story</a>
-                <a href="{{ url_for('process') }}">Our Process</a>
-                <a href="{{ url_for('contact') }}">Contact</a>
-            </nav>
-
-        </div>
-    </header>
-
-
-    <!-- PROCESS INTRODUCTION -->
-    <section class="process-intro">
-        <p class="small-title">BEHIND EVERY CREATION</p>
-
-        <h1>Our Creative <span>Process</span></h1>
-
-        <p>
-            Every artwork has a beautiful journey.
-            From the first inspiration to the final touch,
-            each creation is made with patience, creativity
-            and love.
-        </p>
-    </section>
-
-
-    <!-- PROCESS STEPS -->
-    <section class="process-container">
-
-        <!-- STEP 1 -->
-        <div class="process-step">
-
-            <div class="process-image">
-                <img src="{{ url_for('static', filename='image/art33.jpeg.jpeg') }}"
-                     alt="Art inspiration">
-            </div>
-
-            <div class="process-text">
-                <span class="step-number">STEP 01</span>
-
-                <h2>Inspiration</h2>
-
-                <p>
-                    Every beautiful artwork begins with an idea.
-                    We find inspiration in nature, flowers,
-                    leaves and traditional Indian art.
-                    These little details help us imagine
-                    something unique and beautiful.
-                </p>
-            </div>
-
-        </div>
-
-
-        <!-- STEP 2 -->
-        <div class="process-step reverse">
-
-            <div class="process-image">
-                <img src="{{ url_for('static', filename='image/art34.jpeg.jpeg') }}"
-                     alt="Artwork designing">
-            </div>
-
-            <div class="process-text">
-                <span class="step-number">STEP 02</span>
-
-                <h2>Designing</h2>
-
-                <p>
-                    Once we have an idea, we start planning
-                    the artwork. We sketch the design,
-                    select suitable colours and carefully
-                    decide every little detail.
-                </p>
-            </div>
-
-        </div>
-
-
-        <!-- STEP 3 -->
-        <div class="process-step">
-
-            <div class="process-image">
-                <img src="{{ url_for('static', filename='image/art35.jpeg.jpeg') }}"
-                     alt="Handmade artwork creation">
-            </div>
-
-            <div class="process-text">
-                <span class="step-number">STEP 03</span>
-
-                <h2>Handmade Creation</h2>
-
-                <p>
-                    This is where the magic happens.
-                    Every artwork is carefully created by hand
-                    using colours, brushes and creative techniques.
-                    Each piece receives individual attention
-                    and care.
-                </p>
-            </div>
-
-        </div>
-
-
-        <!-- STEP 4 -->
-        <div class="process-step reverse">
-
-            <div class="process-image">
-                <img src="{{ url_for('static', filename='image/art36.jpeg.jpeg') }}"
-                     alt="Finished handmade artwork">
-            </div>
-
-            <div class="process-text">
-                <span class="step-number">STEP 04</span>
-
-                <h2>Final Touch</h2>
-
-                <p>
-                    Finally, we carefully complete the finishing
-                    details and check the artwork.
-                    Each creation is then packed with care,
-                    ready to bring beauty and happiness
-                    to its new home.
-                </p>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- BOTTOM NAVIGATION -->
-    <section class="page-navigation">
+    <div class="page-navigation">
         <a href="{{ url_for('story') }}">← Our Story</a>
         <a href="{{ url_for('contact') }}">Contact Us →</a>
-    </section>
+    </div>
 
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="logo">Chitrabaddh</div>
-        <p>Handmade with Love & Creativity.</p>
-        <p>© 2026 Chitrabaddh. All Rights Reserved.</p>
-    </footer>
+    {% include "partials/footer.html" %}
 
 </body>
 </html>

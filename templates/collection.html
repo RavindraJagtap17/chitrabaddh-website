@@ -1,1128 +1,180 @@
-
+{% from "partials/artwork.html" import art_card, image_modal with context %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Chitrabaddh | Collection</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-
-    <style>
-        .wishlist-top {
-            display: flex;
-            justify-content: flex-end;
-            margin: 20px 0 30px;
-        }
-
-        .wishlist-main-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            background: #8b4a2f;
-            color: white;
-            padding: 11px 20px;
-            border-radius: 30px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-        }
-
-        .wishlist-icon {
-            width: 21px;
-            height: 21px;
-            fill: none;
-            stroke: white;
-            stroke-width: 1.8;
-        }
-
-        .wishlist-count {
-            background: white;
-            color: #8b4a2f;
-            min-width: 21px;
-            height: 21px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-        }
-
-        .category-section {
-            margin-bottom: 75px;
-        }
-
-        .category-title {
-            font-size: 36px;
-            margin-bottom: 12px;
-            color: #1f2a20;
-        }
-
-        .category-description {
-            color: #777;
-            font-size: 16px;
-            margin-bottom: 30px;
-        }
-
-        .wishlist-heart {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            width: 40px;
-            height: 40px;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 2;
-            border: none;
-        }
-
-        .wishlist-heart svg {
-            width: 22px;
-            height: 22px;
-            fill: none;
-            stroke: #555;
-            stroke-width: 1.8;
-        }
-
-        .wishlist-heart.active svg {
-            fill: #e53935;
-            stroke: #e53935;
-        }
-
-        .card img {
-            cursor: zoom-in;
-        }
-
-        #wishlistSection {
-            display: none;
-            padding: 50px 8%;
-            background: #fffdf8;
-        }
-
-        #wishlistSection h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .back-collection {
-            background: #8b4a2f;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 5px;
-            margin-bottom: 25px;
-            border: none;
-            cursor: pointer;
-        }
-
-        #emptyMessage {
-            display: none;
-            text-align: center;
-            padding: 35px;
-            color: #777;
-        }
-
-        /* SEARCH BAR */
-
-        .collection-search {
-            display: flex;
-            align-items: center;
-            max-width: 500px;
-            margin: 20px auto 40px;
-            padding: 0 18px;
-            background: #fff;
-            border: 1px solid #c9a66b;
-            border-radius: 30px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-        }
-
-        .collection-search input {
-            flex: 1;
-            width: 100%;
-            padding: 14px 5px;
-            border: none;
-            outline: none;
-            background: transparent;
-            font-size: 15px;
-            color: #333;
-        }
-
-        .collection-search span {
-            font-size: 21px;
-        }
-
-        #searchResultsSection {
-            margin-bottom: 60px;
-        }
-
-        #searchResultsSection .category-title {
-            font-size: 28px;
-            margin-bottom: 25px;
-        }
-
-        #noResultsMessage {
-            display: none;
-            text-align: center;
-            padding: 30px;
-            color: #777;
-        }
-
-        /* IMAGE ZOOM */
-
-        .image-modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
-            justify-content: center;
-            align-items: center;
-            padding: 30px;
-        }
-
-        .image-modal img {
-            max-width: 90%;
-            max-height: 85vh;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 30px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-        }
-
-
-        /* LOGIN / LOGOUT ABOVE NAVIGATION */
-
-        .header-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .header-auth {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 15px;
-            padding: 8px 0 12px;
-        }
-
-        .header-auth a {
-            display: inline-block;
-            padding: 8px 18px;
-            border: 1px solid #a4873b;
-            border-radius: 5px;
-            color: #a4873b;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: 0.3s ease;
-        }
-
-        .header-auth a:hover {
-            background: #a4873b;
-            color: white;
-        }
-
-        .welcome-user {
-            color: #1f2a20;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-
-        @media(max-width: 768px) {
-
-            .category-title {
-                font-size: 28px;
-            }
-
-            #wishlistSection {
-                padding: 40px 5%;
-            }
-
-            .collection-search {
-                margin: 20px 5% 35px;
-            }
-
-            .header-right {
-                align-items: center;
-                width: 100%;
-            }
-
-            .header-auth {
-                justify-content: center;
-            }
-
-        }
-
-    </style>
+    {% include "partials/head.html" %}
 </head>
-
 
 <body>
 
-<!-- HEADER -->
+    {% include "partials/header.html" %}
 
-<header>
 
-    <div class="logo">
-        चित्रबद्ध
-    </div>
+    <!-- COLLECTION -->
+    <section class="collection collection-page" id="collectionSection">
 
-    <div class="header-right">
-
-        <!-- LOGIN / LOGOUT ABOVE NAVIGATION -->
-
-        <div class="header-auth">
-
-            {% if session.get('user_id') %}
-
-                <span class="welcome-user">
-                    Hi, {{ session.get('name') }}
-                </span>
-
-                <a href="{{ url_for('logout') }}">
-                    Logout
-                </a>
-
-            {% else %}
-
-                <a href="{{ url_for('auth') }}">
-                    Login
-                </a>
-
-            {% endif %}
-
+        <div class="collection-heading">
+            <p class="small-title">CURATED ARTWORKS</p>
+            <h1 class="section-title">Our <span>Collection</span></h1>
+            <p>Discover handmade artworks created with tradition, nature and love.</p>
         </div>
 
-
-        <!-- NAVIGATION -->
-
-        <nav>
-
-            <a href="{{ url_for('home') }}">Home</a>
-
-            <a href="{{ url_for('collection') }}">Collection</a>
-
-            <a href="{{ url_for('story') }}">Our Story</a>
-
-            <a href="{{ url_for('process') }}">Process</a>
-
-            <a href="{{ url_for('contact') }}">Contact</a>
-
-        </nav>
-
-    </div>
-
-</header>
-
-
-<!-- COLLECTION -->
-
-<section class="collection" id="collectionSection">
-
-    <div class="collection-heading">
-
-        <p class="small-title">CURATED ARTWORKS</p>
-
-        <h1>Our Collection</h1>
-
-        <p>
-            Discover handmade artworks created with
-            tradition, nature and love.
-        </p>
-
-    </div>
-
-
-    <!-- WISHLIST BUTTON -->
-
-    <div class="wishlist-top">
-
-        <button class="wishlist-main-btn" onclick="showWishlist()">
-
-            <svg viewBox="0 0 24 24" class="wishlist-icon">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8z"/>
-            </svg>
-
-            Wishlist
-
-            <span id="wishlistCount" class="wishlist-count">0</span>
-
-        </button>
-
-    </div>
-
-
-    <!-- SEARCH BAR -->
-
-    <div class="collection-search">
-
-        <input
-            type="text"
-            id="artSearch"
-            placeholder="Search your favourite artwork..."
-            autocomplete="off"
-        >
-
-        <span>🔍</span>
-
-    </div>
-
-
-    <!-- SEARCH RESULTS -->
-
-    <section id="searchResultsSection" style="display:none;">
-
-        <h2 class="category-title">Search Results</h2>
-
-        <div class="gallery" id="searchResultsGallery"></div>
-
-        <p id="noResultsMessage">
-            No artwork found. Try another search!
-        </p>
-
-    </section>
-
-
-    <!-- CATEGORY 1 -->
-
-    <section class="category-section">
-
-        <h2 class="category-title">Botanical Frame</h2>
-
-        <p class="category-description">
-            Beautiful handmade paintings inspired by flowers,
-            leaves and nature.
-        </p>
-
-        <div class="gallery" id="botanicalGallery"></div>
-
-    </section>
-
-
-    <!-- CATEGORY 2 -->
-
-    <section class="category-section">
-
-        <h2 class="category-title">Floral Stories</h2>
-
-        <p class="category-description">
-            Elegant decorative wall art with beautiful
-            handmade floral designs.
-        </p>
-
-        <div class="gallery" id="floralGallery"></div>
-
-    </section>
-
-
-    <!-- CATEGORY 3 -->
-
-    <section class="category-section">
-
-        <h2 class="category-title">Pichwai Inspired</h2>
-
-        <p class="category-description">
-            Traditional Indian artwork inspired by cows,
-            lotus flowers and Indian culture.
-        </p>
-
-        <div class="gallery" id="pichwaiGallery"></div>
-
-    </section>
-
-</section>
-
-
-<!-- WISHLIST PAGE -->
-
-<section id="wishlistSection">
-
-    <h1>My Wishlist</h1>
-
-    <button class="back-collection" onclick="showCollection()">
-        ← Back to Collection
-    </button>
-
-    <div class="gallery" id="wishlistGallery"></div>
-
-    <p id="emptyMessage">
-        Your Wishlist is empty. Add your favourite artworks!
-    </p>
-
-</section>
-
-
-<!-- PAGE NAVIGATION -->
-
-<div class="page-navigation" id="pageNavigation">
-
-    <a href="{{ url_for('home') }}">← Back to Home</a>
-
-    <a href="{{ url_for('story') }}">Next: Our Story →</a>
-
-</div>
-
-
-<!-- IMAGE ZOOM MODAL -->
-
-<div class="image-modal" id="imageModal">
-
-    <span class="close-modal" onclick="closeImageModal()">
-        &times;
-    </span>
-
-    <img id="modalImage" src="" alt="Artwork Preview">
-
-</div>
-
-
-<!-- JAVASCRIPT -->
-
-<script>
-
-const imageFolder = "{{ url_for('static', filename='image/') }}";
-
-const whatsappNumber = "{{ whatsapp_number }}";
-
-
-// =====================================
-// ARTWORK DATA - 30 PRODUCTS
-// =====================================
-
-const artworks = [
-
-    // BOTANICAL FRAME - 10
-
-    {
-        id: "B1",
-        category: "botanical",
-        name: "Botanical Frame",
-        description: "Handmade floral and green leaf artwork",
-        price: 2500,
-        image: "art2.jpeg.jpeg"
-    },
-    {
-        id: "B2",
-        category: "botanical",
-        name: "Green Leaf Painting",
-        description: "Beautiful handmade leaf painting",
-        price: 2200,
-        image: "art3.jpeg.jpeg"
-    },
-    {
-        id: "B3",
-        category: "botanical",
-        name: "Wild Flower Frame",
-        description: "Delicate wild flower artwork",
-        price: 2300,
-        image: "art5.jpeg.jpeg"
-    },
-    {
-        id: "B4",
-        category: "botanical",
-        name: "Tropical Leaves",
-        description: "Decorative tropical leaf painting",
-        price: 2800,
-        image: "art6.jpeg.jpeg"
-    },
-    {
-        id: "B5",
-        category: "botanical",
-        name: "Yellow Blossom",
-        description: "Hand painted yellow floral artwork",
-        price: 2400,
-        image: "art7.jpeg.jpeg"
-    },
-    {
-        id: "B6",
-        category: "botanical",
-        name: "Pink Flower Garden",
-        description: "Beautiful pink flower painting",
-        price: 2600,
-        image: "art8.jpeg.jpeg"
-    },
-    {
-        id: "B7",
-        category: "botanical",
-        name: "Nature Collection",
-        description: "Nature inspired handmade wall art",
-        price: 3000,
-        image: "art9.jpeg.jpeg"
-    },
-    {
-        id: "B8",
-        category: "botanical",
-        name: "Botanical Beauty",
-        description: "Elegant botanical decorative frame",
-        price: 2700,
-        image: "art10.jpeg.jpeg"
-    },
-    {
-        id: "B9",
-        category: "botanical",
-        name: "Floral Branches",
-        description: "Handmade branches and flower painting",
-        price: 2500,
-        image: "art11.jpeg.jpeg"
-    },
-    {
-        id: "B10",
-        category: "botanical",
-        name: "Nature Wall Frame",
-        description: "Premium handmade nature artwork",
-        price: 3200,
-        image: "art12.jpeg.jpeg"
-    },
-
-
-    // FLORAL STORIES - 10
-
-    {
-        id: "F1",
-        category: "floral",
-        name: "Floral Stories",
-        description: "Elegant handmade floral wall art",
-        price: 3000,
-        image: "art13.jpeg.jpeg"
-    },
-    {
-        id: "F2",
-        category: "floral",
-        name: "Garden Flowers",
-        description: "Decorative handmade garden painting",
-        price: 2800,
-        image: "art14.jpeg.jpeg"
-    },
-    {
-        id: "F3",
-        category: "floral",
-        name: "Blossom Wall Art",
-        description: "Beautiful floral decorative artwork",
-        price: 3200,
-        image: "art15.jpeg.jpeg"
-    },
-    {
-        id: "F4",
-        category: "floral",
-        name: "Pink Floral Design",
-        description: "Hand painted pink flower design",
-        price: 2600,
-        image: "art16.jpeg.jpeg"
-    },
-    {
-        id: "F5",
-        category: "floral",
-        name: "Flower Garden Panel",
-        description: "Decorative handmade flower panel",
-        price: 3500,
-        image: "art17.jpeg.jpeg"
-    },
-    {
-        id: "F6",
-        category: "floral",
-        name: "Traditional Floral Art",
-        description: "Traditional handmade floral design",
-        price: 3300,
-        image: "art18.jpeg.jpeg"
-    },
-    {
-        id: "F7",
-        category: "floral",
-        name: "Golden Flower Art",
-        description: "Elegant decorative golden floral art",
-        price: 3800,
-        image: "art19.jpeg.jpeg"
-    },
-    {
-        id: "F8",
-        category: "floral",
-        name: "Decorative Floral Frame",
-        description: "Beautiful handmade decorative frame",
-        price: 2900,
-        image: "art20.jpeg.jpeg"
-    },
-    {
-        id: "F9",
-        category: "floral",
-        name: "Floral Heritage",
-        description: "Traditional floral inspired wall painting",
-        price: 3600,
-        image: "art21.jpeg.jpeg"
-    },
-    {
-        id: "F10",
-        category: "floral",
-        name: "Royal Flower Panel",
-        description: "Premium handmade floral wall panel",
-        price: 4000,
-        image: "art22.jpeg.jpeg"
-    },
-
-
-    // PICHWAI INSPIRED - 10
-
-    {
-        id: "P1",
-        category: "pichwai",
-        name: "Pichwai Inspired",
-        description: "Traditional Indian cow and lotus artwork",
-        price: 4500,
-        image: "art4.jpeg"
-    },
-    {
-        id: "P2",
-        category: "pichwai",
-        name: "Sacred Cow Painting",
-        description: "Traditional cow inspired handmade art",
-        price: 4200,
-        image: "art23.jpeg.jpeg"
-    },
-    {
-        id: "P3",
-        category: "pichwai",
-        name: "Lotus Garden",
-        description: "Beautiful traditional lotus painting",
-        price: 4000,
-        image: "art24.jpeg.jpeg"
-    },
-    {
-        id: "P4",
-        category: "pichwai",
-        name: "Krishna Inspired Art",
-        description: "Traditional Indian devotional artwork",
-        price: 5000,
-        image: "art25.jpeg.jpeg"
-    },
-    {
-        id: "P5",
-        category: "pichwai",
-        name: "Cow and Lotus Art",
-        description: "Handmade traditional cow and lotus design",
-        price: 4800,
-        image: "art26.jpeg.jpeg"
-    },
-    {
-        id: "P6",
-        category: "pichwai",
-        name: "Indian Heritage Painting",
-        description: "Traditional Indian decorative painting",
-        price: 4600,
-        image: "art27.jpeg.jpeg"
-    },
-    {
-        id: "P7",
-        category: "pichwai",
-        name: "Royal Pichwai Art",
-        description: "Premium traditional handmade artwork",
-        price: 5500,
-        image: "art28.jpeg.jpeg"
-    },
-    {
-        id: "P8",
-        category: "pichwai",
-        name: "Lotus Pond Painting",
-        description: "Traditional lotus pond inspired artwork",
-        price: 4300,
-        image: "art29.jpeg.jpeg"
-    },
-    {
-        id: "P9",
-        category: "pichwai",
-        name: "Traditional Cow Frame",
-        description: "Decorative Indian cow painting",
-        price: 4700,
-        image: "art30.jpeg.jpeg"
-    },
-    {
-        id: "P10",
-        category: "pichwai",
-        name: "Pichwai Heritage Panel",
-        description: "Handmade traditional Indian wall panel",
-        price: 5800,
-        image: "art31.jpeg.jpeg"
-    }
-
-];
-
-
-// =====================================
-// CREATE ART CARDS
-// =====================================
-
-function createArtworkCard(art) {
-
-    const card = document.createElement("div");
-
-    card.className = "card";
-    card.dataset.id = art.id;
-
-    const message = encodeURIComponent(
-        "Hello Chitrabaddh, I am interested in " +
-        art.name + " priced at ₹" + art.price + "."
-    );
-
-    card.innerHTML = `
-
-        <button class="wishlist-heart"
-                data-id="${art.id}"
-                aria-label="Add to wishlist">
-
-            <svg viewBox="0 0 24 24">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8z"/>
-            </svg>
-
-        </button>
-
-        <img src="${imageFolder}${art.image}"
-             alt="${art.name}"
-             loading="lazy">
-
-        <div class="card-content">
-
-            <h3>${art.name}</h3>
-
-            <p>${art.description}</p>
-
-            <div class="product-bottom">
-
-                <strong>₹${art.price.toLocaleString("en-IN")}</strong>
-
-                <a href="https://wa.me/${whatsappNumber}?text=${message}"
-                   target="_blank" rel="noopener noreferrer">
-                    Order on WhatsApp
-                </a>
-
+        <div class="collection-tools">
+
+            <div class="collection-search">
+                <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+                </svg>
+                <input type="text"
+                       id="artSearch"
+                       placeholder="Search your favourite artwork..."
+                       aria-label="Search artworks"
+                       autocomplete="off">
             </div>
 
+            <button class="wishlist-main-btn" type="button" id="showWishlistBtn">
+                <svg viewBox="0 0 24 24" class="wishlist-icon" aria-hidden="true">
+                    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8z"/>
+                </svg>
+                Wishlist
+                <span id="wishlistCount" class="wishlist-count">0</span>
+            </button>
+
         </div>
-    `;
 
-    return card;
-}
+        <p id="noResultsMessage" class="empty-message">No artwork found. Try another search!</p>
 
+        {% set categories = [
+            ("botanical", "Botanical Frame", "Beautiful handmade paintings inspired by flowers, leaves and nature."),
+            ("floral", "Floral Stories", "Elegant decorative wall art with beautiful handmade floral designs."),
+            ("pichwai", "Pichwai Inspired", "Traditional Indian artwork inspired by cows, lotus flowers and Indian culture."),
+        ] %}
 
-// =====================================
-// DISPLAY PRODUCTS
-// =====================================
+        {% for key, title, description in categories %}
+        <section class="category-section" data-category="{{ key }}">
 
-function displayArtworks() {
+            <h2 class="category-title">{{ title }}</h2>
+            <p class="category-description">{{ description }}</p>
 
-    const botanicalGallery =
-        document.getElementById("botanicalGallery");
+            <div class="gallery">
+                {% for art in artworks if art.category == key %}
+                    {{ art_card(art) }}
+                {% endfor %}
+            </div>
 
-    const floralGallery =
-        document.getElementById("floralGallery");
+        </section>
+        {% endfor %}
 
-    const pichwaiGallery =
-        document.getElementById("pichwaiGallery");
+    </section>
 
-    artworks.forEach(art => {
 
-        const card = createArtworkCard(art);
+    <!-- WISHLIST -->
+    <section id="wishlistSection" class="collection" hidden>
 
-        if (art.category === "botanical") {
-            botanicalGallery.appendChild(card);
-        }
+        <div class="collection-heading">
+            <h2 class="section-title">My <span>Wishlist</span></h2>
+        </div>
 
-        if (art.category === "floral") {
-            floralGallery.appendChild(card);
-        }
+        <button class="back-collection" type="button" id="backToCollectionBtn">
+            ← Back to Collection
+        </button>
 
-        if (art.category === "pichwai") {
-            pichwaiGallery.appendChild(card);
-        }
+        <div class="gallery" id="wishlistGallery"></div>
 
-    });
+        <p id="emptyMessage" class="empty-message">
+            Your wishlist is empty. Tap the heart on any artwork to save it here.
+        </p>
 
-}
+    </section>
 
 
-// =====================================
-// WISHLIST
-// =====================================
+    <div class="page-navigation" id="pageNavigation">
+        <a href="{{ url_for('home') }}">← Back to Home</a>
+        <a href="{{ url_for('story') }}">Next: Our Story →</a>
+    </div>
 
-let wishlist = [];
+    {% include "partials/footer.html" %}
 
-try {
+    {{ image_modal() }}
 
-    wishlist = JSON.parse(
-        localStorage.getItem("chitrabaddhWishlist") || "[]"
-    );
 
-    if (!Array.isArray(wishlist)) {
-        wishlist = [];
-    }
+    <script>
+        // Search and wishlist view (hearts and image zoom are in main.js)
 
-} catch (error) {
+        const collectionSection = document.getElementById("collectionSection");
+        const wishlistSection = document.getElementById("wishlistSection");
+        const pageNavigation = document.getElementById("pageNavigation");
+        const noResults = document.getElementById("noResultsMessage");
 
-    wishlist = [];
 
-}
+        // SEARCH: hide cards that do not match, and empty categories
+        document.getElementById("artSearch").addEventListener("input", function () {
 
+            const term = this.value.toLowerCase().trim();
+            let total = 0;
 
-function updateWishlist() {
+            document.querySelectorAll(".category-section").forEach(section => {
 
-    document.getElementById("wishlistCount").textContent =
-        wishlist.length;
+                let visible = 0;
 
-    localStorage.setItem(
-        "chitrabaddhWishlist",
-        JSON.stringify(wishlist)
-    );
+                section.querySelectorAll(".card").forEach(card => {
+                    const match = card.dataset.search.includes(term);
+                    card.hidden = !match;
+                    if (match) visible++;
+                });
 
-    document.querySelectorAll(".wishlist-heart").forEach(button => {
+                section.hidden = visible === 0;
+                total += visible;
+            });
 
-        const id = button.dataset.id;
-
-        const active = wishlist.includes(id);
-
-        button.classList.toggle("active", active);
-
-        button.setAttribute(
-            "aria-label",
-            active ? "Remove from wishlist" : "Add to wishlist"
-        );
-
-    });
-
-}
-
-
-// ADD OR REMOVE FROM WISHLIST
-
-document.addEventListener("click", function(event) {
-
-    const button = event.target.closest(".wishlist-heart");
-
-    if (!button) return;
-
-    const id = button.dataset.id;
-
-    if (wishlist.includes(id)) {
-
-        wishlist = wishlist.filter(item => item !== id);
-
-    } else {
-
-        wishlist.push(id);
-
-    }
-
-    updateWishlist();
-
-    if (
-        document.getElementById("wishlistSection").style.display === "block"
-    ) {
-
-        displayWishlist();
-
-    }
-
-});
-
-
-// DISPLAY SAVED ARTWORKS
-
-function displayWishlist() {
-
-    const gallery =
-        document.getElementById("wishlistGallery");
-
-    const emptyMessage =
-        document.getElementById("emptyMessage");
-
-    gallery.innerHTML = "";
-
-    wishlist.forEach(id => {
-
-        const art = artworks.find(item => item.id === id);
-
-        if (art) {
-            gallery.appendChild(createArtworkCard(art));
-        }
-
-    });
-
-    emptyMessage.style.display =
-        gallery.children.length === 0 ? "block" : "none";
-
-    updateWishlist();
-
-}
-
-
-// OPEN WISHLIST
-
-function showWishlist() {
-
-    document.getElementById("collectionSection").style.display = "none";
-
-    document.getElementById("wishlistSection").style.display = "block";
-
-    document.getElementById("pageNavigation").style.display = "none";
-
-    displayWishlist();
-
-    window.scrollTo(0, 0);
-
-}
-
-
-// BACK TO COLLECTION
-
-function showCollection() {
-
-    document.getElementById("wishlistSection").style.display = "none";
-
-    document.getElementById("collectionSection").style.display = "block";
-
-    document.getElementById("pageNavigation").style.display = "flex";
-
-    updateWishlist();
-
-    window.scrollTo(0, 0);
-
-}
-
-
-// =====================================
-// ARTWORK SEARCH
-// =====================================
-
-function searchArt() {
-
-    const searchValue = document
-        .getElementById("artSearch")
-        .value
-        .toLowerCase()
-        .trim();
-
-    const searchSection =
-        document.getElementById("searchResultsSection");
-
-    const searchGallery =
-        document.getElementById("searchResultsGallery");
-
-    const noResults =
-        document.getElementById("noResultsMessage");
-
-    const categorySections =
-        document.querySelectorAll(".category-section");
-
-    searchGallery.innerHTML = "";
-
-    if (searchValue === "") {
-
-        searchSection.style.display = "none";
-
-        categorySections.forEach(section => {
-            section.style.display = "";
+            noResults.style.display = total === 0 ? "block" : "none";
         });
 
-        return;
-    }
 
-    categorySections.forEach(section => {
-        section.style.display = "none";
-    });
+        // WISHLIST VIEW: copies the saved cards into the wishlist grid
+        function showWishlist() {
 
-    searchSection.style.display = "block";
+            const gallery = document.getElementById("wishlistGallery");
+            gallery.innerHTML = "";
 
-    const results = artworks.filter(art => {
+            Chitrabaddh.getWishlist().forEach(id => {
+                const card = collectionSection.querySelector(`.card[data-id="${id}"]`);
+                if (card) {
+                    const copy = card.cloneNode(true);
+                    copy.hidden = false;
+                    gallery.appendChild(copy);
+                }
+            });
 
-        const searchableText = (
-            art.name + " " +
-            art.category + " " +
-            art.description + " " +
-            art.image
-        ).toLowerCase();
+            document.getElementById("emptyMessage").style.display =
+                gallery.children.length === 0 ? "block" : "none";
 
-        return searchableText.includes(searchValue);
+            collectionSection.hidden = true;
+            pageNavigation.hidden = true;
+            wishlistSection.hidden = false;
 
-    });
+            Chitrabaddh.refreshHearts();
+            window.scrollTo(0, 0);
+        }
 
-    results.forEach(art => {
+        function showCollection() {
+            wishlistSection.hidden = true;
+            collectionSection.hidden = false;
+            pageNavigation.hidden = false;
+            Chitrabaddh.refreshHearts();
+            window.scrollTo(0, 0);
+        }
 
-        const card = createArtworkCard(art);
+        document.getElementById("showWishlistBtn").addEventListener("click", showWishlist);
+        document.getElementById("backToCollectionBtn").addEventListener("click", showCollection);
 
-        searchGallery.appendChild(card);
-
-    });
-
-    noResults.style.display =
-        results.length === 0 ? "block" : "none";
-
-    updateWishlist();
-
-}
-
-
-// =====================================
-// IMAGE ZOOM
-// =====================================
-
-document.addEventListener("click", function(event) {
-
-    const image = event.target.closest(".card img");
-
-    if (!image) return;
-
-    document.getElementById("modalImage").src = image.src;
-
-    document.getElementById("imageModal").style.display = "flex";
-
-});
-
-
-function closeImageModal() {
-
-    document.getElementById("imageModal").style.display = "none";
-
-    document.getElementById("modalImage").src = "";
-
-}
-
-
-document.getElementById("imageModal").addEventListener("click", function(event) {
-
-    if (event.target.id === "imageModal") {
-        closeImageModal();
-    }
-
-});
-
-
-// =====================================
-// INITIALIZE
-// =====================================
-
-displayArtworks();
-
-updateWishlist();
-
-document.getElementById("artSearch").addEventListener(
-    "input",
-    searchArt
-);
-
-</script>
+        // Removing a heart while viewing the wishlist updates the list
+        document.addEventListener("chitrabaddh:wishlist", function () {
+            if (!wishlistSection.hidden) showWishlist();
+        });
+    </script>
 
 </body>
 </html>
